@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>DNS 域名解析 | shxlxa</title><meta name="author" content="shxlxa"><meta name="copyright" content="shxlxa"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、应用层的常用协议 超文本传输：http，https 文件传输：FTP 电子邮件：SMPT、POP3、IMAP 动态主机配置：DHCP 域名系统：DNS  二、域名由于IP地址不方便记忆，并且不能表达组织的名称和性质，人们设计出了域名。但实际上，为了能够访问到具体的主机，最终还是得知道目标主机的IP地址 域名根据级别分为顶级域名、二级域名、三级域名等 ![域名层级关系](..&#x2F;..&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DNS 域名解析">
+<meta property="og:url" content="https://shxlxa.github.io/2024/03/03/%E7%BD%91%E7%BB%9C/DNS%20%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="shxlxa">
+<meta property="og:description" content="一、应用层的常用协议 超文本传输：http，https 文件传输：FTP 电子邮件：SMPT、POP3、IMAP 动态主机配置：DHCP 域名系统：DNS  二、域名由于IP地址不方便记忆，并且不能表达组织的名称和性质，人们设计出了域名。但实际上，为了能够访问到具体的主机，最终还是得知道目标主机的IP地址 域名根据级别分为顶级域名、二级域名、三级域名等 ![域名层级关系](..&#x2F;..&amp;#">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2024-03-03T03:09:43.000Z">
+<meta property="article:modified_time" content="2024-03-03T14:05:35.348Z">
+<meta property="article:author" content="shxlxa">
+<meta property="article:tag" content="网络协议">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://shxlxa.github.io/2024/03/03/%E7%BD%91%E7%BB%9C/DNS%20%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'DNS 域名解析',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-03 22:05:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="shxlxa"><span class="site-name">shxlxa</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">DNS 域名解析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-03T03:09:43.000Z" title="发表于 2024-03-03 11:09:43">2024-03-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-03T14:05:35.348Z" title="更新于 2024-03-03 22:05:35">2024-03-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="DNS 域名解析"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h3 id="一、应用层的常用协议"><a href="#一、应用层的常用协议" class="headerlink" title="一、应用层的常用协议"></a>一、应用层的常用协议</h3><ul>
+<li>超文本传输：http，https</li>
+<li>文件传输：FTP</li>
+<li>电子邮件：SMPT、POP3、IMAP</li>
+<li>动态主机配置：DHCP</li>
+<li>域名系统：DNS</li>
+</ul>
+<h3 id="二、域名"><a href="#二、域名" class="headerlink" title="二、域名"></a>二、域名</h3><p>由于IP地址不方便记忆，并且不能表达组织的名称和性质，人们设计出了域名。但实际上，为了能够访问到具体的主机，最终还是得知道目标主机的IP地址</p>
+<p>域名根据级别分为<strong>顶级域名、二级域名、三级域名</strong>等</p>
+<p>![域名层级关系](..&#x2F;..&#x2F;source&#x2F;images&#x2F;DNS 域名解析&#x2F;域名层级关系-9445524.webp)</p>
+<h4 id="0-根域名"><a href="#0-根域名" class="headerlink" title="0.根域名"></a>0.根域名</h4><p>根域名服务器是最高层次的域名服务器。每个根域名服务器都知道所有的顶级域名服务器的域名及其IP地址。因特网上共有13个不同IP地址的根域名服务器。当本地域名服务器向根域名服务器发出查询请求时，路由器就把查询请求报文转发到离这个DNS客户最近的一个根域名服务器。这就加快了DNS的查询过程，同时也更合理地利用了因特网的资源。</p>
+<h4 id="1-顶级域名"><a href="#1-顶级域名" class="headerlink" title="1.顶级域名"></a>1.顶级域名</h4><ul>
+<li><p>通用顶级域名</p>
+<blockquote>
+<p>.com 公司</p>
+<p>.net, 网络</p>
+<p>.org 组织机构</p>
+<p>.edu 教育</p>
+<p>.gov 政府部门</p>
+</blockquote>
+</li>
+<li><p>国家及地区顶级域名</p>
+<blockquote>
+<p>.cn 中国</p>
+<p>.jp 日本</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="2-二级域名"><a href="#2-二级域名" class="headerlink" title="2.二级域名"></a>2.二级域名</h4><p>二级域名是指顶级域名之下的域名</p>
+<ul>
+<li>在通用顶级域名下，它一般指域名注册人的名称，例如google、baidu、microsoft等</li>
+<li>在国家及地区顶级域名下，它一般指注册类别的，例如com、edu、gov、net等</li>
+</ul>
+<h3 id="三、DNS"><a href="#三、DNS" class="headerlink" title="三、DNS"></a>三、DNS</h3><p>DNS的全称是：Domain Name System，译为：域名系统</p>
+<p>利用DNS协议，可以将域名（比如baidu.com）解析成对应的IP地址（比如220.181.38.148）</p>
+<p>DNS可以基于UDP协议，也可以基于TCP协议，服务器占用53端口</p>
+<h4 id="DNS-查询过程"><a href="#DNS-查询过程" class="headerlink" title="DNS 查询过程"></a>DNS 查询过程</h4><p>![DNS 解析](..&#x2F;..&#x2F;source&#x2F;images&#x2F;DNS 域名解析&#x2F;DNS 解析-9444745.jpeg)</p>
+<p>其完整的DNS解析过程有以下几个步骤：</p>
+<p><strong>（1）查看浏览器缓存</strong></p>
+<p>当用户通过浏览器访问某域名时，浏览器首先会在自己的缓存中查找是否有该域名对应的 IP 地址（若曾经访问过该域名且没有清空缓存便存在）。</p>
+<p><strong>（2）查看系统缓存</strong></p>
+<p>当浏览器缓存中无域名对应 IP 则会自动检查用户计算机系统 Hosts 文件 DNS 缓存是否有该域名对应 IP。</p>
+<p><strong>（3）查看路由器缓存</strong></p>
+<p>当浏览器及系统缓存中均无域名对应 IP 则进入路由器缓存中检查，以上三步均为客服端的 DNS 缓存。</p>
+<p><strong>（4）查看ISP DNS 缓存</strong></p>
+<p>当在用户客服端查找不到域名对应 IP 地址，则将进入 ISP DNS 缓存中进行查询。比如你用的是电信的网络，则会进入电信的 DNS 缓存服务器中进行查找。</p>
+<p><strong>（5）询问根域名服务器</strong></p>
+<p>当以上均未完成，则进入根服务器进行查询。全球仅有 13 台根域名服务器，1 个主根域名服务器，其余 12 为辅根域名服务器。根域名收到请求后会查看区域文件记录，若无则将其管辖范围内顶级域名（如.com、.cn等）服务器 IP 告诉本地 DNS 服务器。</p>
+<p><strong>（6）询问顶级域名服务器</strong></p>
+<p>顶级域名服务器收到请求后查看区域文件记录，若无记录则将其管辖范围内权威域名服务器的 IP 地址告诉本地 DNS 服务器。</p>
+<p><strong>（7）询问权威域名（主域名）服务器</strong></p>
+<p>权威域名服务器接收到请求后查询自己的缓存，如果没有则进入下一级域名服务器进行查找，并重复该步骤直至找到正确记录。</p>
+<p><strong>（8）保存结果至缓存</strong></p>
+<p>本地域名服务器把返回的结果保存到缓存，以备下一次使用，同时将该结果反馈给客户端，客户端通过这个 IP 地址即可访问目标Web服务器。至此，DNS递归查询的整个过程结束</p>
+<p>总结如下：</p>
+<blockquote>
+<p>浏览器缓存——》系统hosts文件——》本地DNS解析器缓存——》本地域名服务器（本地配置区域资源、本地域名服务器缓存)——》根域名服务器——》主域名服务器——》下一级域名域名服务器 客户端——》本地域名服务器（递归查询) 本地域名服务器—》DNS服务器的交互查询是迭代查询</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://shxlxa.github.io">shxlxa</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://shxlxa.github.io/2024/03/03/%E7%BD%91%E7%BB%9C/DNS%20%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/">https://shxlxa.github.io/2024/03/03/%E7%BD%91%E7%BB%9C/DNS%20%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://shxlxa.github.io" target="_blank">shxlxa</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/">网络协议</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/02/29/Widget/App%E4%B8%8EWidget%E6%95%B0%E6%8D%AE%E5%85%B1%E4%BA%AB/" title="iOS Widget（3）：App与Widget数据共享"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">iOS Widget（3）：App与Widget数据共享</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">shxlxa</div><div class="author-info__description">This is my blog</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/shxlxa"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%BA%94%E7%94%A8%E5%B1%82%E7%9A%84%E5%B8%B8%E7%94%A8%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.</span> <span class="toc-text">一、应用层的常用协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9F%9F%E5%90%8D"><span class="toc-number">2.</span> <span class="toc-text">二、域名</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#0-%E6%A0%B9%E5%9F%9F%E5%90%8D"><span class="toc-number">2.1.</span> <span class="toc-text">0.根域名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%A1%B6%E7%BA%A7%E5%9F%9F%E5%90%8D"><span class="toc-number">2.2.</span> <span class="toc-text">1.顶级域名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BA%8C%E7%BA%A7%E5%9F%9F%E5%90%8D"><span class="toc-number">2.3.</span> <span class="toc-text">2.二级域名</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81DNS"><span class="toc-number">3.</span> <span class="toc-text">三、DNS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS-%E6%9F%A5%E8%AF%A2%E8%BF%87%E7%A8%8B"><span class="toc-number">3.1.</span> <span class="toc-text">DNS 查询过程</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/03/%E7%BD%91%E7%BB%9C/DNS%20%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/" title="DNS 域名解析">DNS 域名解析</a><time datetime="2024-03-03T03:09:43.000Z" title="发表于 2024-03-03 11:09:43">2024-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/29/Widget/App%E4%B8%8EWidget%E6%95%B0%E6%8D%AE%E5%85%B1%E4%BA%AB/" title="iOS Widget（3）：App与Widget数据共享">iOS Widget（3）：App与Widget数据共享</a><time datetime="2024-02-29T01:16:31.000Z" title="发表于 2024-02-29 09:16:31">2024-02-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/23/Widget/%E5%B0%8F%E7%BB%84%E4%BB%B6%E5%88%B7%E6%96%B0%E6%9C%BA%E5%88%B6/" title="iOS Widget（2）：小组件刷新机制">iOS Widget（2）：小组件刷新机制</a><time datetime="2024-02-23T00:16:31.000Z" title="发表于 2024-02-23 08:16:31">2024-02-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/22/Widget/%E5%B0%8F%E7%BB%84%E4%BB%B6%E6%A1%86%E6%9E%B6%E8%A7%A3%E6%9E%90/" title="iOS Widget（1）：小组件框架解析">iOS Widget（1）：小组件框架解析</a><time datetime="2024-02-22T01:16:31.000Z" title="发表于 2024-02-22 09:16:31">2024-02-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/08/XCode14-3%E6%89%93%E5%8C%85%E9%94%99%E8%AF%AF/" title="XCode14.3打包错误">XCode14.3打包错误</a><time datetime="2023-10-08T10:09:33.000Z" title="发表于 2023-10-08 18:09:33">2023-10-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By shxlxa</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
