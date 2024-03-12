@@ -1,0 +1,326 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>HTTP请求报文和响应报文详解 | shxlxa</title><meta name="author" content="shxlxa"><meta name="copyright" content="shxlxa"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="HTTP有两种报文：请求报文和响应报文 一、请求报文一个HTTP请求报文由请求行（request line） 、请求头部（header）、空行和请求数据4个部分组成。 下图给出了请求报文的一般格式。  一个简单的例子 1234567POST &#x2F;user HTTP&#x2F;1.1                       &#x2F;&#x2F; 请求行Host: www.user.comContent-Type: appl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP请求报文和响应报文详解">
+<meta property="og:url" content="https://shxlxa.github.io/2024/03/04/%E7%BD%91%E7%BB%9C/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E5%92%8C%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="shxlxa">
+<meta property="og:description" content="HTTP有两种报文：请求报文和响应报文 一、请求报文一个HTTP请求报文由请求行（request line） 、请求头部（header）、空行和请求数据4个部分组成。 下图给出了请求报文的一般格式。  一个简单的例子 1234567POST &#x2F;user HTTP&#x2F;1.1                       &#x2F;&#x2F; 请求行Host: www.user.comContent-Type: appl">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2024-03-04T03:09:43.000Z">
+<meta property="article:modified_time" content="2024-03-05T11:39:56.161Z">
+<meta property="article:author" content="shxlxa">
+<meta property="article:tag" content="网络协议">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://shxlxa.github.io/2024/03/04/%E7%BD%91%E7%BB%9C/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E5%92%8C%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E8%AF%A6%E8%A7%A3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HTTP请求报文和响应报文详解',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-05 19:39:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="shxlxa"><span class="site-name">shxlxa</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">HTTP请求报文和响应报文详解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-04T03:09:43.000Z" title="发表于 2024-03-04 11:09:43">2024-03-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-05T11:39:56.161Z" title="更新于 2024-03-05 19:39:56">2024-03-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="HTTP请求报文和响应报文详解"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>HTTP有两种报文：请求报文和响应报文</p>
+<h2 id="一、请求报文"><a href="#一、请求报文" class="headerlink" title="一、请求报文"></a>一、请求报文</h2><p>一个HTTP请求报文由请求行（request line） 、请求头部（header）、空行和请求数据4个部分组成。</p>
+<p>下图给出了请求报文的一般格式。</p>
+<p><img src="/../../source/images/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E5%92%8C%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E8%AF%A6%E8%A7%A3/143dae14a2294bf9ab8884cd819ccece~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp" alt="请求报文"></p>
+<p>一个简单的例子</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">POST /user HTTP/1.1                       // 请求行</span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>www.user.com</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/x-www-form-urlencoded</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>Keep-Alive</span><br><span class="line"><span class="attribute">User-agent</span><span class="punctuation">: </span>Mozilla/5.0.                  // 以上是请求头</span><br><span class="line">（此处必须有一空行 |                         // 空行分割header和请求内容 </span><br><span class="line">name=world                                // 请求体(可选，如get请求时可选)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-请求行"><a href="#1-1-请求行" class="headerlink" title="1.1 请求行"></a>1.1 请求行</h3><p>　　请求行由三部分组成：<strong>请求方法</strong>、<strong>请求URL</strong>（不包括域名 | 、<strong>HTTP协议版本</strong></p>
+<p>　　请求方法比较多：GET、POST、HEAD、PUT、DELETE、OPTIONS、TRACE、CONNECT</p>
+<p>　　最常用的是GET和POST。</p>
+<h4 id="1-1-1-请求方法"><a href="#1-1-1-请求方法" class="headerlink" title="1.1.1 请求方法"></a>1.1.1 请求方法</h4><p>1） GET</p>
+<p>　　传递参数长度受限制，因为传递的参数是直接表示在地址栏中，而特定浏览器和服务器对url的长度是有限制的。</p>
+<p>　　因此，GET不适合用来传递私密数据，也不适合拿来传递大量数据。</p>
+<p>　　一般的HTTP请求大多都是GET。</p>
+<p>2）POST</p>
+<p>　　POST把传递的数据封装在HTTP请求数据中，以名称&#x2F;值的形式出现，可以传输大量数据，对数据量没有限制，也不会显示在URL中。 　表单的提交用的是POST。</p>
+<p>3）HEAD</p>
+<p>　　HEAD跟GET相似，不过服务端接收到HEAD请求时只返回响应头，不发送响应内容。所以，如果只需要查看某个页面的状态时，用HEAD更高效，因为省去了传输页面内容的时间。</p>
+<p>4）DELETE</p>
+<p>　　删除某一个资源。</p>
+<p>5）OPTIONS</p>
+<p>　　用于获取当前URL所支持的方法。若请求成功，会在HTTP头中包含一个名为“Allow”的头，值是所支持的方法，如“GET, POST”。</p>
+<p>6）PUT</p>
+<p>　　把一个资源存放在指定的位置上。</p>
+<p>　　本质上来讲， PUT和POST极为相似，都是向服务器发送数据，但它们之间有一个重要区别，PUT通常指定了资源的存放位置，而POST则没有，POST的数据存放位置由服务器自己决定。</p>
+<p>7）TRACE</p>
+<p>　　回显服务器收到的请求，主要用于测试或诊断。</p>
+<p>8）CONNECT</p>
+<p>　　CONNECT方法是HTTP&#x2F;1.1协议预留的，能够将连接改为管道方式的代理服务器。通常用于SSL加密服务器的链接与非加密的HTTP代理服务器的通信。</p>
+<h4 id="1-1-2-HTTP协议版本"><a href="#1-1-2-HTTP协议版本" class="headerlink" title="1.1.2 HTTP协议版本"></a>1.1.2 HTTP协议版本</h4><p>1）HTTP&#x2F;1.0</p>
+<p>HTTP&#x2F;1.0支持：GET、POST、HEAD三种HTTP请求方法。</p>
+<p>2）HTTP&#x2F;1.1</p>
+<p>HTTP&#x2F;1.1是当前正在使用的版本。该版本默认采用持久连接，并能很好地配合代理服务器工作。还支持以管道方式同时发送多个请求，以便降低线路负载，提高传输速度。</p>
+<p>HTTP&#x2F;1.1新增了：OPTIONS、PUT、DELETE、TRACE、CONNECT五种HTTP请求方法。</p>
+<h3 id="1-2-请求头部"><a href="#1-2-请求头部" class="headerlink" title="1.2 请求头部"></a>1.2 请求头部</h3><p><strong>请求头部由关键字&#x2F;值对组成，每行一对</strong></p>
+<p>典型的请求头有：</p>
+<p>　　● User-Agent：产生请求的浏览器类型;</p>
+<p>　　● Accept：客户端可识别的响应内容类型列表;星号 “ * ” 用于按范围将类型分组，用 “ <em>&#x2F;</em> ” 指示可接受全部类型，用“ type&#x2F;* ”指示可接受 type 类型的所有子类型; 比如 Accept：text&#x2F;xml（application&#x2F;json）表示希望接受到的是xml（json）类型。</p>
+<p>　　● Accept-Language：客户端可接受的自然语言;</p>
+<p>　　● Accept-Encoding：客户端可接受的编码压缩格式;</p>
+<p>　　● Accept-Charset：可接受的应答的字符集;</p>
+<p>　　● Host：请求的主机名，允许多个域名同处一个IP 地址，即虚拟主机;</p>
+<p>　　● connection：连接方式(close 或 keepalive);</p>
+<p>　　● Cookie：存储于客户端扩展字段，向同一域名的服务端发送属于该域的cookie;</p>
+<p>　　● Content-Type：发送端发送的实体数据的数据类型。 比如，Content-Type：text&#x2F;html（application&#x2F;json）表示发送的是html类型。</p>
+<p><img src="/../../source/images/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E5%92%8C%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E8%AF%A6%E8%A7%A3/aa90ec2b2edf46cb8de233c0b944b118~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp" alt="一般请求所带有的属性"></p>
+<p>上图展示一般请求所带有的属性</p>
+<h4 id="1-2-1-Content-Type"><a href="#1-2-1-Content-Type" class="headerlink" title="1.2.1 Content-Type"></a>1.2.1 Content-Type</h4><p>常见的Content-Type：</p>
+<table>
+<thead>
+<tr>
+<th>Content-Type</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>text&#x2F;html</td>
+<td>html格式</td>
+</tr>
+<tr>
+<td>text&#x2F;plain</td>
+<td>纯文本格式</td>
+</tr>
+<tr>
+<td>text&#x2F;css</td>
+<td>CSS格式</td>
+</tr>
+<tr>
+<td>text&#x2F;javascript</td>
+<td>js格式</td>
+</tr>
+<tr>
+<td>image&#x2F;gif</td>
+<td>gif图片格式</td>
+</tr>
+<tr>
+<td>image&#x2F;jpeg</td>
+<td>jpg图片格式</td>
+</tr>
+<tr>
+<td>image&#x2F;png</td>
+<td>png图片格式</td>
+</tr>
+<tr>
+<td>application&#x2F;x-www-form-urlencoded</td>
+<td>POST专用：普通的表单提交默认是通过这种方式。form表单数据被编码为key&#x2F;value格式发送到服务器。</td>
+</tr>
+<tr>
+<td>application&#x2F;json</td>
+<td>POST专用：用来告诉服务端消息主体是序列化后的 JSON 字符串</td>
+</tr>
+<tr>
+<td>text&#x2F;xml</td>
+<td>POST专用：发送xml数据</td>
+</tr>
+<tr>
+<td>multipart&#x2F;form-data</td>
+<td>POST专用：下面讲解</td>
+</tr>
+</tbody></table>
+<p><strong>multipart&#x2F;form-data</strong>用以支持向服务器发送二进制数据，以便可以在 POST 请求中实现文件上传等功能</p>
+<p>现在用Postman向百度发送一个请求方式为multipart&#x2F;form-data的POST包，请求报文是这样的：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">http</span><br><span class="line">复制代码POST / HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>www.baidu.com</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW</span><br><span class="line"><span class="attribute">Cache-Control</span><span class="punctuation">: </span>no-cache</span><br><span class="line"><span class="attribute">Postman-Token</span><span class="punctuation">: </span>033120fe-2185-15d4-e486-75e86e2baddd</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundary7MA4YWxkTrZu0gW</span><br><span class="line"><span class="attribute">Content-Disposition</span><span class="punctuation">: </span>form-data; name=&quot;url&quot;</span><br><span class="line"></span><br><span class="line">https://www.baidu.com/</span><br><span class="line">------WebKitFormBoundary7MA4YWxkTrZu0gW</span><br><span class="line"><span class="attribute">Content-Disposition</span><span class="punctuation">: </span>form-data; name=&quot;name&quot;</span><br><span class="line"></span><br><span class="line">waffle</span><br><span class="line">------WebKitFormBoundary7MA4YWxkTrZu0gW</span><br><span class="line"><span class="attribute">Content-Disposition</span><span class="punctuation">: </span>form-data; name=&quot;desk&quot;; filename=&quot;桌子.jpg&quot;</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>image/jpeg</span><br><span class="line"></span><br><span class="line">...contents of 桌子.jpg...</span><br><span class="line">------WebKitFormBoundary7MA4YWxkTrZu0gW--</span><br></pre></td></tr></table></figure>
+
+<p>其中， boundary这个参数是分界线的意思。</p>
+<p>每个参数都由分界线分隔开，参数名（二进制数据还需要指明文件类型）和参数值之间有一行空行，这个空行不能省略:</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http</span><br><span class="line">复制代码------WebKitFormBoundary7MA4YWxkTrZu0gW</span><br><span class="line"><span class="attribute">Content-Disposition</span><span class="punctuation">: </span>form-data; name=&quot;url&quot;</span><br><span class="line"></span><br><span class="line">https://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<p>消息主体最后以 –boundary– 标示结束。</p>
+<p>更加详细的解释可以参考：<a href="https://link.juejin.cn/?target=https://www.jianshu.com/p/e810d1799384">Multipart&#x2F;form-data</a></p>
+<h3 id="1-3-空行"><a href="#1-3-空行" class="headerlink" title="1.3 空行"></a>1.3 空行</h3><p>请求头之后是一个空行，通知服务器以下不再有请求头</p>
+<h3 id="1-4-请求体"><a href="#1-4-请求体" class="headerlink" title="1.4 请求体"></a>1.4 请求体</h3><p>GET没有请求数据，POST有。</p>
+<p>与请求数据相关的最常使用的请求头是 Content-Type 和 Content-Length 。</p>
+<h2 id="二、响应报文"><a href="#二、响应报文" class="headerlink" title="二、响应报文"></a>二、响应报文</h2><p>HTTP响应报文和请求报文的结构差不多，也是由四个部分组成：</p>
+<p><img src="/../../source/images/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E5%92%8C%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E8%AF%A6%E8%A7%A3/6ef274265b1643af8252a0cb3ef2c673~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp" alt="响应报文"></p>
+<h3 id="2-1、状态行"><a href="#2-1、状态行" class="headerlink" title="2.1、状态行"></a>2.1、状态行</h3><p>状态行由三部分组成：<strong>服务器HTTP协议版本</strong>，<strong>响应状态码</strong>，<strong>状态码的文本描述</strong></p>
+<p>格式：HTTP-Version Status-Code Reason-Phrase CRLF</p>
+<p>比如：HTTP&#x2F;1.1 200 OK</p>
+<h4 id="2-1-1、状态码：由3位数字组成，第一个数字定义了响应的类别"><a href="#2-1-1、状态码：由3位数字组成，第一个数字定义了响应的类别" class="headerlink" title="2.1.1、状态码：由3位数字组成，第一个数字定义了响应的类别"></a>2.1.1、状态码：由3位数字组成，第一个数字定义了响应的类别</h4><p>1xx：指示信息，表示请求已接收，继续处理</p>
+<p>2xx：成功，表示请求已被成功接受，处理。</p>
+<ul>
+<li>200 OK：客户端请求成功</li>
+<li>204 No Content：无内容。服务器成功处理，但未返回内容。一般用在只是客户端向服务器发送信息，而服务器不用向客户端返回什么信息的情况。不会刷新页面。</li>
+<li>206 Partial Content：服务器已经完成了部分GET请求（客户端进行了范围请求）。响应报文中包含Content-Range指定范围的实体内容</li>
+</ul>
+<p>3xx：重定向</p>
+<ul>
+<li>301 Moved Permanently：永久重定向，表示请求的资源已经永久的搬到了其他位置。</li>
+<li>302 Found：临时重定向，表示请求的资源临时搬到了其他位置</li>
+<li>303 See Other：临时重定向，应使用GET定向获取请求资源。303功能与302一样，区别只是303明确客户端应该使用GET访问</li>
+<li>307 Temporary Redirect：临时重定向，和302有着相同含义。POST不会变成GET</li>
+<li>304 Not Modified：表示客户端发送附带条件的请求（GET方法请求报文中的IF…）时，条件不满足。返回304时，不包含任何响应主体。虽然304被划分在3XX，但和重定向一毛钱关系都没有</li>
+</ul>
+<p><strong>一个304的使用场景：</strong> 缓存服务器向服务器请求某一个资源的时候，服务器返回的响应报文具有这样的字段：Last-Modified:Wed,7 Sep 2011 09:23:24，缓存器会保存这个资源的同时，保存它的最后修改时间。下次用户向缓存器请求这个资源的时候，缓存器需要确定这个资源是新的，那么它会向原始服务器发送一个HTTP请求（GET方法），并在请求头部中包含了一个字段：If-Modified-Since:Wed,7 Sep 2011 09:23:24，这个值就是上次服务器发送的响应报文中的最后修改时间。</p>
+<p>假设这个资源没有被修改，那么服务器返回一个响应报文：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">HTTP/1.1</span> <span class="number">304</span> Not Modified</span><br><span class="line">Date：Sat, 15 Oct 2011 15:39:29</span><br><span class="line">(空行)                                      </span><br><span class="line">(空响应体)</span><br></pre></td></tr></table></figure>
+
+<p>用304告诉缓存器资源没有被修改，并且响应体是空的，不会浪费带宽。</p>
+<p>4xx：客户端错误</p>
+<ul>
+<li>400 Bad Request：客户端请求有语法错误，服务器无法理解。</li>
+<li>401 Unauthorized：请求未经授权，这个状态代码必须和WWW-Authenticate报头域一起使用。</li>
+<li>403 Forbidden：服务器收到请求，但是拒绝提供服务</li>
+<li>404 Not Found：请求资源不存在。比如，输入了错误的url</li>
+<li>415 Unsupported media type：不支持的媒体类型</li>
+</ul>
+<p>5xx：服务器端错误，服务器未能实现合法的请求。</p>
+<ul>
+<li>500 Internal Server Error：服务器发生不可预期的错误。</li>
+<li>503 Server Unavailable：服务器当前不能处理客户端的请求，一段时间后可能恢复正常</li>
+</ul>
+<h3 id="2-2、响应首部（首部行）：位于响应报文状态行之后"><a href="#2-2、响应首部（首部行）：位于响应报文状态行之后" class="headerlink" title="2.2、响应首部（首部行）：位于响应报文状态行之后"></a>2.2、响应首部（首部行）：位于响应报文状态行之后</h3><p>Date标头：消息产生的时间</p>
+<p>Age标头:（从最初创建开始）响应持续时间</p>
+<p>Server标头: 向客户端标明服务器程序名称和版本</p>
+<p>ETage标头：不透明验证者</p>
+<p>Location标头：URL备用的位置</p>
+<p>Content-Length标头：实体的长度</p>
+<p>Content-Tyep标头：实体的媒体类型</p>
+<p>协商首部： Accept-Ranges: 对当前资源来讲，服务器所能够接受的范围类型 Vary: 首部列表，服务器会根据列表中的内容挑选出最适合的版本发送给客户端 跟安全相关的响应首部： Set-Cookie: 服务器端在某客户端第一次请求时发给令牌 WWW-Authentication: 质询，即要求客户提供帐号和密码</p>
+<h3 id="2-3、响应实体：位于响应首部（首部行）之后"><a href="#2-3、响应实体：位于响应首部（首部行）之后" class="headerlink" title="2.3、响应实体：位于响应首部（首部行）之后"></a>2.3、响应实体：位于响应首部（首部行）之后</h3><p>实体包含了Web客户端请求的对象。Content-Length标头及Content-Type标头用于计算实体的位置、数据类型和数据长度。当Web服务器接收到Web客户端的请求报文后，对HTTP请求报文进行解析，并将Web客户端的请求的对象取出打包，通过HTTP响应报文将数据传回给Web客户端，如果出现错误则返回包含对应错误的错误代码和错误原因的HTTP响应报文。</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6931636106710482958">https://juejin.cn/post/6931636106710482958</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://shxlxa.github.io">shxlxa</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://shxlxa.github.io/2024/03/04/%E7%BD%91%E7%BB%9C/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E5%92%8C%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E8%AF%A6%E8%A7%A3/">https://shxlxa.github.io/2024/03/04/%E7%BD%91%E7%BB%9C/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E5%92%8C%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E8%AF%A6%E8%A7%A3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://shxlxa.github.io" target="_blank">shxlxa</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/">网络协议</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/03/04/%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/" title="HTTP协议"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">HTTP协议</div></div></a></div><div class="next-post pull-right"><a href="/2024/03/03/%E7%BD%91%E7%BB%9C/DNS%20%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/" title="DNS 域名解析"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">DNS 域名解析</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/03/03/%E7%BD%91%E7%BB%9C/DNS%20%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/" title="DNS 域名解析"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-03</div><div class="title">DNS 域名解析</div></div></a></div><div><a href="/2024/03/04/%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/" title="HTTP协议"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-04</div><div class="title">HTTP协议</div></div></a></div><div><a href="/2024/03/12/%E7%BD%91%E7%BB%9C/%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB%20CORS%20%E8%AF%A6%E8%A7%A3%EF%BC%88%E8%BD%AC%EF%BC%89/" title="跨域资源共享 CORS 详解（转）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-12</div><div class="title">跨域资源共享 CORS 详解（转）</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">shxlxa</div><div class="author-info__description">This is my blog</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/shxlxa"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87"><span class="toc-number">1.</span> <span class="toc-text">一、请求报文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E8%AF%B7%E6%B1%82%E8%A1%8C"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 请求行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1.1 请求方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-HTTP%E5%8D%8F%E8%AE%AE%E7%89%88%E6%9C%AC"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.1.2 HTTP协议版本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E8%AF%B7%E6%B1%82%E5%A4%B4%E9%83%A8"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 请求头部</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-Content-Type"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 Content-Type</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E7%A9%BA%E8%A1%8C"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 空行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E8%AF%B7%E6%B1%82%E4%BD%93"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 请求体</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87"><span class="toc-number">2.</span> <span class="toc-text">二、响应报文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1%E3%80%81%E7%8A%B6%E6%80%81%E8%A1%8C"><span class="toc-number">2.1.</span> <span class="toc-text">2.1、状态行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1%E3%80%81%E7%8A%B6%E6%80%81%E7%A0%81%EF%BC%9A%E7%94%B13%E4%BD%8D%E6%95%B0%E5%AD%97%E7%BB%84%E6%88%90%EF%BC%8C%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%95%B0%E5%AD%97%E5%AE%9A%E4%B9%89%E4%BA%86%E5%93%8D%E5%BA%94%E7%9A%84%E7%B1%BB%E5%88%AB"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1、状态码：由3位数字组成，第一个数字定义了响应的类别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2%E3%80%81%E5%93%8D%E5%BA%94%E9%A6%96%E9%83%A8%EF%BC%88%E9%A6%96%E9%83%A8%E8%A1%8C%EF%BC%89%EF%BC%9A%E4%BD%8D%E4%BA%8E%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E8%A1%8C%E4%B9%8B%E5%90%8E"><span class="toc-number">2.2.</span> <span class="toc-text">2.2、响应首部（首部行）：位于响应报文状态行之后</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3%E3%80%81%E5%93%8D%E5%BA%94%E5%AE%9E%E4%BD%93%EF%BC%9A%E4%BD%8D%E4%BA%8E%E5%93%8D%E5%BA%94%E9%A6%96%E9%83%A8%EF%BC%88%E9%A6%96%E9%83%A8%E8%A1%8C%EF%BC%89%E4%B9%8B%E5%90%8E"><span class="toc-number">2.3.</span> <span class="toc-text">2.3、响应实体：位于响应首部（首部行）之后</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/12/%E7%BD%91%E7%BB%9C/%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB%20CORS%20%E8%AF%A6%E8%A7%A3%EF%BC%88%E8%BD%AC%EF%BC%89/" title="跨域资源共享 CORS 详解（转）">跨域资源共享 CORS 详解（转）</a><time datetime="2024-03-12T03:09:43.000Z" title="发表于 2024-03-12 11:09:43">2024-03-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/04/%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/" title="HTTP协议">HTTP协议</a><time datetime="2024-03-04T03:09:43.000Z" title="发表于 2024-03-04 11:09:43">2024-03-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/04/%E7%BD%91%E7%BB%9C/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E5%92%8C%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E8%AF%A6%E8%A7%A3/" title="HTTP请求报文和响应报文详解">HTTP请求报文和响应报文详解</a><time datetime="2024-03-04T03:09:43.000Z" title="发表于 2024-03-04 11:09:43">2024-03-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/03/%E7%BD%91%E7%BB%9C/DNS%20%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/" title="DNS 域名解析">DNS 域名解析</a><time datetime="2024-03-03T03:09:43.000Z" title="发表于 2024-03-03 11:09:43">2024-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/29/Widget/App%E4%B8%8EWidget%E6%95%B0%E6%8D%AE%E5%85%B1%E4%BA%AB/" title="iOS Widget（3）：App与Widget数据共享">iOS Widget（3）：App与Widget数据共享</a><time datetime="2024-02-29T01:16:31.000Z" title="发表于 2024-02-29 09:16:31">2024-02-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By shxlxa</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
