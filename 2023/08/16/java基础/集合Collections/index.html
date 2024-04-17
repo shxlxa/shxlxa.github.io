@@ -1,0 +1,371 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>集合Collections | shxlxa</title><meta name="author" content="shxlxa"><meta name="copyright" content="shxlxa"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="集合框架预览 集合类和数组不一样，数组元素既可以是基本类型的值，也可以是对象（实际上保存的是对象的引用变量），而集合里只能保存对象（实际上只是保存对象的引用变量，但通常习惯上认为集合里保存的是对象）。  黄色块为集合的接口，蓝色块为集合的实现类。 一、动态数组ArrayListArrayList 类实现了可变数组的大小，存储在内的数据称为元素。它还提供了快速基于索引访问元素的方式，对尾部成员的增加">
+<meta property="og:type" content="article">
+<meta property="og:title" content="集合Collections">
+<meta property="og:url" content="https://shxlxa.github.io/2023/08/16/java%E5%9F%BA%E7%A1%80/%E9%9B%86%E5%90%88Collections/index.html">
+<meta property="og:site_name" content="shxlxa">
+<meta property="og:description" content="集合框架预览 集合类和数组不一样，数组元素既可以是基本类型的值，也可以是对象（实际上保存的是对象的引用变量），而集合里只能保存对象（实际上只是保存对象的引用变量，但通常习惯上认为集合里保存的是对象）。  黄色块为集合的接口，蓝色块为集合的实现类。 一、动态数组ArrayListArrayList 类实现了可变数组的大小，存储在内的数据称为元素。它还提供了快速基于索引访问元素的方式，对尾部成员的增加">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2023-08-16T03:09:43.000Z">
+<meta property="article:modified_time" content="2024-03-04T04:17:12.123Z">
+<meta property="article:author" content="shxlxa">
+<meta property="article:tag" content="java基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://shxlxa.github.io/2023/08/16/java%E5%9F%BA%E7%A1%80/%E9%9B%86%E5%90%88Collections/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '集合Collections',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-04 12:17:12'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="shxlxa"><span class="site-name">shxlxa</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">集合Collections</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-08-16T03:09:43.000Z" title="发表于 2023-08-16 11:09:43">2023-08-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-04T04:17:12.123Z" title="更新于 2024-03-04 12:17:12">2024-03-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/java/">java</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="集合Collections"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>集合框架预览</p>
+<p>集合类和数组不一样，数组元素既可以是基本类型的值，也可以是对象（实际上保存的是对象的引用变量），而集合里只能保存对象（实际上只是保存对象的引用变量，但通常习惯上认为集合里保存的是对象）。</p>
+<p><img src="http://c.biancheng.net/uploads/allimg/191205/5-1912051036333V.png" alt="集合预览.png"></p>
+<p>黄色块为集合的接口，蓝色块为集合的实现类。</p>
+<h3 id="一、动态数组ArrayList"><a href="#一、动态数组ArrayList" class="headerlink" title="一、动态数组ArrayList"></a>一、动态数组ArrayList</h3><p><strong>ArrayList 类实现了可变数组的大小</strong>，存储在内的数据称为元素。它还提供了快速基于索引访问元素的方式，对尾部成员的增加和删除支持较好。使用 ArrayList 创建的集合，允许对集合中的元素进行快速的随机访问，不过，向 ArrayList 中插入与删除元素的速度相对较慢。</p>
+<p>ArrayList 类除了包含 Collection 接口中的所有方法之外，还包括 List 接口中提供的如下所示的方法。</p>
+<table>
+<thead>
+<tr>
+<th>方法名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E get(int index)</td>
+<td>获取此集合中指定索引位置的元素，E 为集合中元素的数据类型</td>
+</tr>
+<tr>
+<td>int index(Object o)</td>
+<td>返回此集合中第一次出现指定元素的索引，如果此集合不包含该元 素，则返回 -1</td>
+</tr>
+<tr>
+<td>int lastIndexOf(Object o)</td>
+<td>返回此集合中最后一次出现指定元素的索引，如果此集合不包含该 元素，则返回 -1</td>
+</tr>
+<tr>
+<td>E set(int index, Eelement)</td>
+<td>将此集合中指定索引位置的元素修改为 element 参数指定的对象。 此方法返回此集合中指定索引位置的原元素</td>
+</tr>
+<tr>
+<td>List<E> subList(int fromlndex, int tolndex)</td>
+<td>返回一个新的集合，新集合中包含 fromlndex 和 tolndex 索引之间 的所有元素。包含 fromlndex 处的元素，不包含 tolndex 索引处的 元素</td>
+</tr>
+</tbody></table>
+<h4 id="1-动态数组转为普通数组"><a href="#1-动态数组转为普通数组" class="headerlink" title="1.动态数组转为普通数组"></a>1.动态数组转为普通数组</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">list.add(<span class="number">11</span>);</span><br><span class="line">list.add(<span class="number">22</span>);</span><br><span class="line">list.add(<span class="number">33</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//ArrayList转为普通数组，带上具体类型</span></span><br><span class="line">Integer[] array2 = list.toArray(<span class="keyword">new</span> <span class="title class_">Integer</span>[<span class="number">0</span>]);</span><br><span class="line"><span class="comment">// [Ljava.lang.Integer;@28d93b30</span></span><br><span class="line">System.out.println(array2);</span><br></pre></td></tr></table></figure>
+
+<p>ArrayList不能通过下标访问，只能通过get方法访问</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list[<span class="number">0</span>] 错误</span><br><span class="line">list.get[<span class="number">0</span>] 正确</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>List<E> subList(int fromIndex, int toIndex)方法</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">list.add(&quot;1&quot;);</span><br><span class="line">list.add(&quot;2&quot;);</span><br><span class="line">list.add(&quot;333&quot;);</span><br><span class="line"></span><br><span class="line">List subList = list.subList(0,2);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="2-ArrayList的遍历"><a href="#2-ArrayList的遍历" class="headerlink" title="2.ArrayList的遍历"></a>2.ArrayList的遍历</h4><ul>
+<li><p>传统的for循环</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">list.add(<span class="number">11</span>);</span><br><span class="line">list.add(<span class="number">22</span>);</span><br><span class="line">list.add(<span class="number">33</span>);</span><br><span class="line">  </span><br><span class="line"><span class="type">int</span> <span class="variable">size</span> <span class="operator">=</span> list.size();</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">    System.out.println(list.get(i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>for :循环</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (Object obj : list) &#123;</span><br><span class="line">    System.out.println(obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>迭代器循环Iterator</p>
+<p>遍历中obj &#x3D; 100并不会改变list. 所以 <strong>当使用 Iterator 对集合元素进行迭代时，Iterator 并不是把集合元素本身传给了迭代变量，而是把集合元素的值传给了迭代变量</strong>，所以修改迭代变量的值对集合元素本身没有任何影响</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Iterator</span> <span class="variable">it</span> <span class="operator">=</span> list.iterator();</span><br><span class="line"><span class="keyword">while</span> (it.hasNext())&#123;</span><br><span class="line">    <span class="type">Integer</span> <span class="variable">obj</span> <span class="operator">=</span> (Integer) it.next();</span><br><span class="line">  	obj = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>forEach循环，本质也是迭代器循环。它是接口<code>public interface Iterable&lt;T&gt;</code> 的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.forEach((obj)-&gt; System.out.println(obj));</span><br></pre></td></tr></table></figure>
+
+<p><strong>注：如果希望在遍历的时候删除元素，请使用Iterator遍历,并使用iterator的remove方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">    List&lt;Integer&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">    list.add(<span class="number">11</span>);</span><br><span class="line">    list.add(<span class="number">22</span>);</span><br><span class="line">    Iterator&lt;Integer&gt; it = list.iterator();</span><br><span class="line">    <span class="keyword">while</span> (it.hasNext())&#123;</span><br><span class="line">        it.next();</span><br><span class="line">        it.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="3-自定义Iterable、Iterator"><a href="#3-自定义Iterable、Iterator" class="headerlink" title="3.自定义Iterable、Iterator"></a>3.自定义Iterable、Iterator</h4><p>要想一个对象具有迭代器功能，必须实现Iterable</p>
+<p>定义一个对象ClassRoom,实现Iterable。必须实现<code>public Iterator iterator() &#123;&#125;</code>方法。定义一个内部类ClassRoomIterator，实现Iterator接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cft;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClassRoom</span> <span class="keyword">implements</span> <span class="title class_">Iterable</span>&lt;String&gt;&#123;</span><br><span class="line">    <span class="keyword">private</span> String[] students;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ClassRoom</span><span class="params">(String... students)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.students = students;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Iterator <span class="title function_">iterator</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span>  <span class="title class_">ClassRoomIterator</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">class</span> <span class="title class_">ClassRoomIterator</span> <span class="keyword">implements</span> <span class="title class_">Iterator</span>&lt;String&gt;&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="type">int</span> index;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">hasNext</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> index &lt; students.length;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> String <span class="title function_">next</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> students[index++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ClassRoom</span> <span class="variable">room</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassRoom</span>(<span class="string">&quot;Jack&quot;</span>,<span class="string">&quot;Tom&quot;</span>);</span><br><span class="line">room.forEach((obj)-&gt; System.out.println(obj));</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (String name : room) &#123;</span><br><span class="line">    System.out.println(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-ArrayList的扩容原理"><a href="#4-ArrayList的扩容原理" class="headerlink" title="4.ArrayList的扩容原理"></a>4.ArrayList的扩容原理</h4><p>ArrayList的最小容量是10。每次扩容时，新容量是旧容量的1.5倍。</p>
+<p>如果ArrayList的容量比较固定，建议在实例化时指定容量。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ArrayList</span> <span class="variable">list</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>(<span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="二、LinkedList类"><a href="#二、LinkedList类" class="headerlink" title="二、LinkedList类"></a>二、LinkedList类</h3><p><strong>LinkedList 类采用链表结构保存对象</strong>，这种结构的优点是<strong>便于向集合中插入或者删除元素</strong>。需要频繁向集合中插入和删除元素时，使用 LinkedList 类比 ArrayList 类效果高，但是 LinkedList 类随机访问元素的速度则相对较慢。这里的随机访问是指检索集合中特定索引位置的元素。</p>
+<p>LinkedList 类除了包含 Collection 接口和 List 接口中的所有方法之外，还特别提供了以下所示的方法。</p>
+<table>
+<thead>
+<tr>
+<th>方法名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>void addFirst(E e)</td>
+<td>将指定元素添加到此集合的开头</td>
+</tr>
+<tr>
+<td>void addLast(E e)</td>
+<td>将指定元素添加到此集合的末尾</td>
+</tr>
+<tr>
+<td>E getFirst()</td>
+<td>返回此集合的第一个元素</td>
+</tr>
+<tr>
+<td>E getLast()</td>
+<td>返回此集合的最后一个元素</td>
+</tr>
+<tr>
+<td>E removeFirst()</td>
+<td>删除此集合中的第一个元素</td>
+</tr>
+<tr>
+<td>E removeLast()</td>
+<td>删除此集合中的最后一个元素</td>
+</tr>
+</tbody></table>
+<h3 id="三、Set集合"><a href="#三、Set集合" class="headerlink" title="三、Set集合"></a>三、Set集合</h3><p>set特点</p>
+<ul>
+<li>Set 集合中的对象不按特定的方式排序</li>
+<li>Set 集合中不能包含重复的对象，并且最多只允许包含一个 null 元素</li>
+</ul>
+<h4 id="HashSet-类"><a href="#HashSet-类" class="headerlink" title="HashSet 类"></a>HashSet 类</h4><p>HashSet 是 Set 接口的典型实现，大多数时候使用 Set 集合时就是使用这个实现类。HashSet 是按照 Hash 算法来存储集合中的元素。因此具有很好的存取和查找性能。</p>
+<p>HashSet 具有以下特点：</p>
+<ul>
+<li>不能保证元素的排列顺序，顺序可能与添加顺序不同，顺序也有可能发生变化。</li>
+<li>HashSet 不是同步的，如果多个线程同时访问或修改一个 HashSet，则必须通过代码来保证其同步。</li>
+<li>集合元素值可以是 null。</li>
+</ul>
+<p>当向 HashSet 集合中存入一个元素时，HashSet 会调用该对象的 hashCode() 方法来得到该对象的 hashCode 值，然后根据该 hashCode 值决定该对象在 HashSet 中的存储位置。如果有两个元素通过 equals() 方法比较返回的结果为 true，但它们的 hashCode 不相等，HashSet 将会把它们存储在不同的位置，依然可以添加成功。</p>
+<p>也就是说，两个对象的 hashCode 值相等且通过 equals() 方法比较返回结果为 true，则 HashSet 集合认为两个元素相等。</p>
+<h3 id="四、Map"><a href="#四、Map" class="headerlink" title="四、Map"></a>四、Map</h3><p>Map 是一种键-值对（key-value）集合，Map 集合中的每一个元素都包含一个键（key）对象和一个值（value）对象。用于保存具有映射关系的数据。</p>
+<p>Map 集合里保存着两组值，一组值用于保存 Map 里的 key，另外一组值用于保存 Map 里的 value，key 和 value 都可以是任何引用类型的数据。Map 的 key 不允许重复，value 可以重复，即同一个 Map 对象的任何两个 key 通过 equals 方法比较总是返回 false。</p>
+<p><strong>Map 接口主要有两个实现类：HashMap 类和 TreeMap 类。其中，HashMap 类按哈希算法来存取键对象，而 TreeMap 类可以对键对象进行排序。</strong></p>
+<p>Map常用方法</p>
+<table>
+<thead>
+<tr>
+<th>方法名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>void clear()</td>
+<td>删除该 Map 对象中的所有 key-value 对。</td>
+</tr>
+<tr>
+<td>boolean containsKey(Object key)</td>
+<td>查询 Map 中是否包含指定的 key，如果包含则返回 true。</td>
+</tr>
+<tr>
+<td>boolean containsValue(Object value)</td>
+<td>查询 Map 中是否包含一个或多个 value，如果包含则返回 true。</td>
+</tr>
+<tr>
+<td>V get(Object key)</td>
+<td>返回 Map 集合中指定键对象所对应的值。V 表示值的数据类型</td>
+</tr>
+<tr>
+<td>V put(K key, V value)</td>
+<td>向 Map 集合中添加键-值对，如果当前 Map 中已有一个与该 key 相等的 key-value 对，则新的 key-value 对会覆盖原来的 key-value 对。</td>
+</tr>
+<tr>
+<td>void putAll(Map m)</td>
+<td>将指定 Map 中的 key-value 对复制到本 Map 中。</td>
+</tr>
+<tr>
+<td>V remove(Object key)</td>
+<td>从 Map 集合中删除 key 对应的键-值对，返回 key 对应的 value，如果该 key 不存在，则返回 null</td>
+</tr>
+<tr>
+<td>boolean remove(Object key, Object value)</td>
+<td>这是 <a target="_blank" rel="noopener" href="http://c.biancheng.net/java/">Java</a> 8 新增的方法，删除指定 key、value 所对应的 key-value 对。如果从该 Map 中成功地删除该 key-value 对，该方法返回 true，否则返回 false。</td>
+</tr>
+<tr>
+<td>Set entrySet()</td>
+<td>返回 Map 集合中所有键-值对的 Set 集合，此 Set 集合中元素的数据类型为 Map.Entry</td>
+</tr>
+<tr>
+<td>Set keySet()</td>
+<td>返回 Map 集合中所有键对象的 Set 集合</td>
+</tr>
+<tr>
+<td>boolean isEmpty()</td>
+<td>查询该 Map 是否为空（即不包含任何 key-value 对），如果为空则返回 true。</td>
+</tr>
+<tr>
+<td>int size()</td>
+<td>返回该 Map 里 key-value 对的个数</td>
+</tr>
+<tr>
+<td>Collection values()</td>
+<td>返回该 Map 里所有 value 组成的 Collection</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">HashMap</span> <span class="variable">users</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">users.put(<span class="string">&quot;11&quot;</span>, <span class="string">&quot;张浩太&quot;</span>); <span class="comment">// 将学生信息键值对存储到Map中</span></span><br><span class="line">users.put(<span class="string">&quot;22&quot;</span>, <span class="string">&quot;刘思诚&quot;</span>);</span><br><span class="line">users.put(<span class="string">&quot;33&quot;</span>, <span class="string">&quot;王强文&quot;</span>);</span><br><span class="line">users.put(<span class="string">&quot;44&quot;</span>, <span class="string">&quot;李国量&quot;</span>);</span><br><span class="line">users.put(<span class="string">&quot;55&quot;</span>, <span class="string">&quot;王路路&quot;</span>);</span><br><span class="line"></span><br><span class="line">System.out.println(users.keySet());</span><br><span class="line">System.out.println(users.values());</span><br><span class="line"></span><br><span class="line"><span class="comment">//遍历</span></span><br><span class="line"><span class="type">Iterator</span> <span class="variable">it</span> <span class="operator">=</span> users.keySet().iterator();</span><br><span class="line"><span class="keyword">while</span> (it.hasNext())&#123;</span><br><span class="line">    <span class="type">Object</span> <span class="variable">key</span> <span class="operator">=</span> it.next();</span><br><span class="line">    <span class="type">Object</span> <span class="variable">val</span> <span class="operator">=</span> users.get(key);</span><br><span class="line">    System.out.println(<span class="string">&quot;学号：&quot;</span>+key+<span class="string">&quot; ,姓名&quot;</span>+val);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line"><span class="keyword">if</span> (users.containsKey(<span class="string">&quot;55&quot;</span>))&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;包含55&quot;</span>);</span><br><span class="line">    users.remove(<span class="string">&quot;55&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(users);</span><br></pre></td></tr></table></figure>
+
+<p>Map的遍历</p>
+<p>1）在 for 循环中使用 entries 实现 Map 的遍历（最常见和最常用的）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    Map&lt;String, String&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, String&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;Java入门教程&quot;</span>, <span class="string">&quot;http://c.biancheng.net/java/&quot;</span>);</span><br><span class="line">    map.put(<span class="string">&quot;C语言入门教程&quot;</span>, <span class="string">&quot;http://c.biancheng.net/c/&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (Map.Entry&lt;String, String&gt; entry : map.entrySet()) &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">mapKey</span> <span class="operator">=</span> entry.getKey();</span><br><span class="line">        <span class="type">String</span> <span class="variable">mapValue</span> <span class="operator">=</span> entry.getValue();</span><br><span class="line">        System.out.println(mapKey + <span class="string">&quot;：&quot;</span> + mapValue);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2）使用 for-each 循环遍历 key 或者 values，一般适用于只需要 Map 中的 key 或者 value 时使用。性能上比 entrySet 较好。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, String&gt;();</span><br><span class="line">map.put(<span class="string">&quot;Java入门教程&quot;</span>, <span class="string">&quot;http://c.biancheng.net/java/&quot;</span>);</span><br><span class="line">map.put(<span class="string">&quot;C语言入门教程&quot;</span>, <span class="string">&quot;http://c.biancheng.net/c/&quot;</span>);</span><br><span class="line"><span class="comment">// 打印键集合</span></span><br><span class="line"><span class="keyword">for</span> (String key : map.keySet()) &#123;</span><br><span class="line">    System.out.println(key);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 打印值集合</span></span><br><span class="line"><span class="keyword">for</span> (String value : map.values()) &#123;</span><br><span class="line">    System.out.println(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3）使用迭代器（Iterator）遍历</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, String&gt;();</span><br><span class="line">map.put(<span class="string">&quot;Java入门教程&quot;</span>, <span class="string">&quot;http://c.biancheng.net/java/&quot;</span>);</span><br><span class="line">map.put(<span class="string">&quot;C语言入门教程&quot;</span>, <span class="string">&quot;http://c.biancheng.net/c/&quot;</span>);</span><br><span class="line">Iterator&lt;Entry&lt;String, String&gt;&gt; entries = map.entrySet().iterator();</span><br><span class="line"><span class="keyword">while</span> (entries.hasNext()) &#123;</span><br><span class="line">    Entry&lt;String, String&gt; entry = entries.next();</span><br><span class="line">    <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> entry.getKey();</span><br><span class="line">    <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> entry.getValue();</span><br><span class="line">    System.out.println(key + <span class="string">&quot;:&quot;</span> + value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4）通过键找值遍历，这种方式的效率比较低，因为本身从键取值是耗时的操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(String key : map.keySet())&#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> map.get(key);</span><br><span class="line">    System.out.println(key+<span class="string">&quot;:&quot;</span>+value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://shxlxa.github.io">shxlxa</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://shxlxa.github.io/2023/08/16/java%E5%9F%BA%E7%A1%80/%E9%9B%86%E5%90%88Collections/">https://shxlxa.github.io/2023/08/16/java%E5%9F%BA%E7%A1%80/%E9%9B%86%E5%90%88Collections/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://shxlxa.github.io" target="_blank">shxlxa</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/08/16/java%E5%9F%BA%E7%A1%80/%E6%B3%9B%E5%9E%8B/" title="泛型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">泛型</div></div></a></div><div class="next-post pull-right"><a href="/2023/02/21/html/%E6%A0%B9%E6%8D%AE%E5%B1%8F%E5%B9%95%E9%AB%98%E5%BA%A6%E9%87%87%E7%94%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E5%B8%83%E5%B1%80/" title="根据屏幕高度采用不同的布局"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">根据屏幕高度采用不同的布局</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/08/16/java%E5%9F%BA%E7%A1%80/0.eclipse%E5%BF%AB%E6%8D%B7%E9%94%AE/" title="eclipse快捷键"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-16</div><div class="title">eclipse快捷键</div></div></a></div><div><a href="/2023/08/16/java%E5%9F%BA%E7%A1%80/1.java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="基础知识"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-16</div><div class="title">基础知识</div></div></a></div><div><a href="/2023/08/16/java%E5%9F%BA%E7%A1%80/10.Java%20%E6%9E%9A%E4%B8%BE(enum)/" title="枚举 enum"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-16</div><div class="title">枚举 enum</div></div></a></div><div><a href="/2023/08/16/java%E5%9F%BA%E7%A1%80/11.%E4%BF%AE%E9%A5%B0%E7%AC%A6/" title="修饰符"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-16</div><div class="title">修饰符</div></div></a></div><div><a href="/2023/08/16/java%E5%9F%BA%E7%A1%80/12.%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E5%92%8Clambda/" title="匿名函数和 lambda"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-16</div><div class="title">匿名函数和 lambda</div></div></a></div><div><a href="/2023/08/16/java%E5%9F%BA%E7%A1%80/13.%E5%BC%82%E5%B8%B8/" title="异常"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-16</div><div class="title">异常</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">shxlxa</div><div class="author-info__description">This is my blog</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/shxlxa"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84ArrayList"><span class="toc-number">1.</span> <span class="toc-text">一、动态数组ArrayList</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84%E8%BD%AC%E4%B8%BA%E6%99%AE%E9%80%9A%E6%95%B0%E7%BB%84"><span class="toc-number">1.1.</span> <span class="toc-text">1.动态数组转为普通数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-ArrayList%E7%9A%84%E9%81%8D%E5%8E%86"><span class="toc-number">1.2.</span> <span class="toc-text">2.ArrayList的遍历</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%87%AA%E5%AE%9A%E4%B9%89Iterable%E3%80%81Iterator"><span class="toc-number">1.3.</span> <span class="toc-text">3.自定义Iterable、Iterator</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-ArrayList%E7%9A%84%E6%89%A9%E5%AE%B9%E5%8E%9F%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">4.ArrayList的扩容原理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81LinkedList%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text">二、LinkedList类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81Set%E9%9B%86%E5%90%88"><span class="toc-number">3.</span> <span class="toc-text">三、Set集合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HashSet-%E7%B1%BB"><span class="toc-number">3.1.</span> <span class="toc-text">HashSet 类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Map"><span class="toc-number">4.</span> <span class="toc-text">四、Map</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/13/%E7%BD%91%E7%BB%9C/Cookie%20%E5%92%8C%20Session%E6%80%BB%E7%BB%93/" title="Cookie 和 Session总结">Cookie 和 Session总结</a><time datetime="2024-03-13T03:09:43.000Z" title="发表于 2024-03-13 11:09:43">2024-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/12/%E7%BD%91%E7%BB%9C/%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB%20CORS%20%E8%AF%A6%E8%A7%A3%EF%BC%88%E8%BD%AC%EF%BC%89/" title="跨域资源共享 CORS 详解（转）">跨域资源共享 CORS 详解（转）</a><time datetime="2024-03-12T03:09:43.000Z" title="发表于 2024-03-12 11:09:43">2024-03-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/04/%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/" title="HTTP协议">HTTP协议</a><time datetime="2024-03-04T03:09:43.000Z" title="发表于 2024-03-04 11:09:43">2024-03-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/04/%E7%BD%91%E7%BB%9C/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E5%92%8C%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E8%AF%A6%E8%A7%A3/" title="HTTP请求报文和响应报文详解">HTTP请求报文和响应报文详解</a><time datetime="2024-03-04T03:09:43.000Z" title="发表于 2024-03-04 11:09:43">2024-03-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/03/%E7%BD%91%E7%BB%9C/DNS%20%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/" title="DNS 域名解析">DNS 域名解析</a><time datetime="2024-03-03T03:09:43.000Z" title="发表于 2024-03-03 11:09:43">2024-03-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By shxlxa</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
