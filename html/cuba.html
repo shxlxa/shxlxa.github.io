@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>shxlxa | shxlxa</title><meta name="author" content="shxlxa"><meta name="copyright" content="shxlxa"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="长方体                *{             margin: 0;             padding: 0;         }          ul{             margin: 100px auto;             width: 200px;             height: 200px;">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>shxlxa | shxlxa</title><meta name="author" content="shxlxa"><meta name="copyright" content="shxlxa"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="列表               ul {             list-style-type: none;             margin: 0;             padding: 0;             background-color: #e1e1e1;             width: 400px;             margin-">
 <meta property="og:type" content="website">
 <meta property="og:title" content="shxlxa">
 <meta property="og:url" content="https://shxlxa.github.io/html/cuba.html">
 <meta property="og:site_name" content="shxlxa">
-<meta property="og:description" content="长方体                *{             margin: 0;             padding: 0;         }          ul{             margin: 100px auto;             width: 200px;             height: 200px;">
+<meta property="og:description" content="列表               ul {             list-style-type: none;             margin: 0;             padding: 0;             background-color: #e1e1e1;             width: 400px;             margin-">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
-<meta property="article:published_time" content="2024-09-06T06:41:55.292Z">
-<meta property="article:modified_time" content="2018-08-28T07:30:10.000Z">
+<meta property="article:published_time" content="2024-09-06T06:49:54.734Z">
+<meta property="article:modified_time" content="2018-08-27T12:50:25.000Z">
 <meta property="article:author" content="shxlxa">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://shxlxa.github.io/html/cuba.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
@@ -57,7 +57,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2018-08-28 15:30:10'
+  postUpdate: '2018-08-27 20:50:25'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -165,79 +165,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>长方体</title>
+    <title>列表</title>
 
     <style>
-
-        *{
+        ul {
+            list-style-type: none;
             margin: 0;
             padding: 0;
+            background-color: #e1e1e1;
+            width: 400px;
+            margin-left: 10px;
+            float: left;
+            border:1px solid #d1d1d1;
         }
 
-        ul{
-            margin: 100px auto;
-            width: 200px;
-            height: 200px;
-            background-color: skyblue;
-            position: relative;
-            transform: rotateY(0deg) rotateX(0deg);
-            transform-style: preserve-3d;
-            animation: cirlceMove 5s linear 0s infinite;
+        li {
+
         }
 
-        @keyframes  cirlceMove{
-            from{
-                /*transform: rotateY(0deg) rotateX(30deg);*/
-                transform: rotateX(0deg);
-            }
-            to{
-                /*transform: rotateY(360deg) rotateX(30deg);*/
-                transform: rotateX(360deg);
-            }
-        }
-
-        ul li{
-            list-style: none;
-            width: 200px;
-            height: 200px;
-            position: absolute;
-            line-height: 200px;
+        li a {
+            display: block;
+            color: #000;
+            padding: 8px 0;
+            text-decoration: none;
+            float: left;
+            width: 25%;
             text-align: center;
         }
-        ul li:nth-child(1){
-            background-color: saddlebrown;
-            /*transform: translateX(100px) rotateY(90deg);*/
-            transform: rotateX(90deg) translateZ(100px) scale(2, 1);;
-        }
 
-        ul li:nth-child(2){
-            background-color: #f9fb34;
-            /*transform: translateX(-100px) rotateY(90deg);*/
-            transform: rotateX(180deg) translateZ(100px) scale(2, 1);;
+        li a.active {
+            background-color: #4caf50;
+            color: white;
         }
-
-        ul li:nth-child(3){
-            background-color: #47d1f8;
-            /*transform: translateY(-100px) rotateX(90deg);*/
-            transform: rotateX(270deg) translateZ(100px) scale(2, 1);;
-        }
-
-        ul li:nth-child(4){
-            background-color: greenyellow;
-            /*transform: translateY(100px) rotateX(90deg);*/
-            transform: rotateX(360deg) translateZ(100px) scale(2, 1);;
-        }
-
-        ul li:nth-child(5){
-            background-color: hotpink;
-            /*transform: translateZ(-100px);*/
-            transform: translateX(-100px) rotateY(90deg);
-        }
-
-        ul li:nth-child(6){
-            background-color: salmon;
-            /*transform: translateZ(100px);*/
-            transform: translateX(100px) rotateY(90deg);
+        li a:hover:not(.active){
+            background-color: #555;
+            color: white;
         }
 
     </style>
@@ -245,14 +207,12 @@
 </head>
 <body>
 
-<ul>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>5</li>
-    <li>6</li>
-</ul>
+    <ul>
+        <li><a class="active" href="#home">主页</a></li>
+        <li><a href="#news">新闻</a></li>
+        <li><a href="#contact">联系</a></li>
+        <li><a href="#about">关于</a></li>
+    </ul>
 
 </body>
 </html></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">shxlxa</div><div class="author-info__description">This is my blog</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/shxlxa"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/01/Swift/Study_Combine/" title="combine学习">combine学习</a><time datetime="2024-09-01T03:09:43.000Z" title="发表于 2024-09-01 11:09:43">2024-09-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/03/%E7%BD%91%E7%BB%9C/DNS%20%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/" title="DNS 域名解析">DNS 域名解析</a><time datetime="2024-03-03T03:09:43.000Z" title="发表于 2024-03-03 11:09:43">2024-03-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/29/Widget/App%E4%B8%8EWidget%E6%95%B0%E6%8D%AE%E5%85%B1%E4%BA%AB/" title="iOS Widget（3）：App与Widget数据共享">iOS Widget（3）：App与Widget数据共享</a><time datetime="2024-02-29T01:16:31.000Z" title="发表于 2024-02-29 09:16:31">2024-02-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/23/Widget/%E5%B0%8F%E7%BB%84%E4%BB%B6%E5%88%B7%E6%96%B0%E6%9C%BA%E5%88%B6/" title="iOS Widget（2）：小组件刷新机制">iOS Widget（2）：小组件刷新机制</a><time datetime="2024-02-23T00:16:31.000Z" title="发表于 2024-02-23 08:16:31">2024-02-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/22/Widget/%E5%B0%8F%E7%BB%84%E4%BB%B6%E6%A1%86%E6%9E%B6%E8%A7%A3%E6%9E%90/" title="iOS Widget（1）：小组件框架解析">iOS Widget（1）：小组件框架解析</a><time datetime="2024-02-22T01:16:31.000Z" title="发表于 2024-02-22 09:16:31">2024-02-22</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
@@ -262,4 +222,4 @@
             </div>
             <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/html/"><span class="card-category-list-name">html</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/iOS/"><span class="card-category-list-name">iOS</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/shell/"><span class="card-category-list-name">shell</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/swift/"><span class="card-category-list-name">swift</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/"><span class="card-category-list-name">网络</span><span class="card-category-list-count">1</span></a></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Xcode/" style="font-size: 1.15em; color: rgb(117, 181, 69)">Xcode</a><a href="/tags/iOS/" style="font-size: 1.15em; color: rgb(142, 187, 33)">iOS</a><a href="/tags/grep/" style="font-size: 1.15em; color: rgb(176, 32, 7)">grep</a><a href="/tags/combine/" style="font-size: 1.15em; color: rgb(20, 9, 81)">combine</a><a href="/tags/widget/" style="font-size: 1.3em; color: rgb(55, 26, 98)">widget</a><a href="/tags/jQuery/" style="font-size: 1.45em; color: rgb(171, 125, 194)">jQuery</a><a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" style="font-size: 1.15em; color: rgb(52, 33, 104)">网络协议</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">九月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/02/"><span class="card-archive-list-date">二月 2022</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/08/"><span class="card-archive-list-date">八月 2020</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">13</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2024-09-06T06:44:38.044Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-09-06T06:44:38.044Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By shxlxa</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Xcode/" style="font-size: 1.15em; color: rgb(165, 123, 66)">Xcode</a><a href="/tags/iOS/" style="font-size: 1.15em; color: rgb(62, 159, 41)">iOS</a><a href="/tags/grep/" style="font-size: 1.15em; color: rgb(32, 14, 5)">grep</a><a href="/tags/combine/" style="font-size: 1.15em; color: rgb(174, 141, 132)">combine</a><a href="/tags/widget/" style="font-size: 1.3em; color: rgb(52, 140, 49)">widget</a><a href="/tags/jQuery/" style="font-size: 1.45em; color: rgb(76, 106, 126)">jQuery</a><a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" style="font-size: 1.15em; color: rgb(146, 15, 41)">网络协议</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">九月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/02/"><span class="card-archive-list-date">二月 2022</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/08/"><span class="card-archive-list-date">八月 2020</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">13</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2024-09-06T06:50:08.453Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-09-06T06:50:08.453Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By shxlxa</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
