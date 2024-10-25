@@ -1,37 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>XCode14.3打包错误</title>
-    <url>/2023/10/08/XCode14-3%E6%89%93%E5%8C%85%E9%94%99%E8%AF%AF/</url>
-    <content><![CDATA[<ul>
-<li>在有pods的项目中，xcode14.3之后打包出现如下错误</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">command phasescriptexecution failed with a nonzero exit code</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>原因及解决方法如下</li>
-</ul>
-<p>There is an issue with Cocoapods now, because Xcode 14.3 is now using a relative path in its symlink for frameworks.</p>
-<p>Either wait for release of Cocoapods version 1.12.1 or make this simple change in your <code>Pods-APPNAME-frameworks.sh</code> file:</p>
-<p>Replace:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if [ -L &quot;$&#123;source&#125;&quot; ]; then</span><br><span class="line">  echo &quot;Symlinked...&quot;</span><br><span class="line">  source=&quot;$(readlink &quot;$&#123;source&#125;&quot;)&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>with:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if [ -L &quot;$&#123;source&#125;&quot; ]; then</span><br><span class="line">  echo &quot;Symlinked...&quot;</span><br><span class="line">  source=&quot;$(readlink -f &quot;$&#123;source&#125;&quot;)&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>Note that <code>-f</code> was added.</p>
-<p>参考链接：</p>
-<p><a href="https://developer.apple.com/forums/thread/727525">https://developer.apple.com/forums/thread/727525</a></p>
-]]></content>
-      <categories>
-        <category>iOS</category>
-      </categories>
-      <tags>
-        <tag>Xcode</tag>
-        <tag>iOS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>It is my first blog</title>
     <url>/2020/08/16/first%20blog/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -869,7 +838,7 @@ numbers
 <p>作者：戴铭<br>链接：<a href="https://juejin.cn/post/7369534106604765221">https://juejin.cn/post/7369534106604765221</a><br>来源：稀土掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
 ]]></content>
       <categories>
-        <category>swift</category>
+        <category>SwiftUI</category>
       </categories>
       <tags>
         <tag>SwiftData</tag>
@@ -1393,6 +1362,95 @@ numbers
       </categories>
       <tags>
         <tag>网络协议</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>swiftUI 中的导航比较</title>
+    <url>/2024/12/25/Swift/swiftUI%20%E4%B8%AD%E7%9A%84%E5%AF%BC%E8%88%AA%E6%AF%94%E8%BE%83/</url>
+    <content><![CDATA[<h1 id="SwiftUI-中的导航视图：NavigationLink、navigationDestination、NavigationView、NavigationStack-和-NavigationSplitView-比较与示例"><a href="#SwiftUI-中的导航视图：NavigationLink、navigationDestination、NavigationView、NavigationStack-和-NavigationSplitView-比较与示例" class="headerlink" title="SwiftUI 中的导航视图：NavigationLink、navigationDestination、NavigationView、NavigationStack 和 NavigationSplitView 比较与示例"></a>SwiftUI 中的导航视图：NavigationLink、navigationDestination、NavigationView、NavigationStack 和 NavigationSplitView 比较与示例</h1><p>在 SwiftUI 中，有多种方式可以实现视图之间的导航。本文将比较 <code>NavigationLink</code>、<code>navigationDestination</code>、<code>NavigationView</code>、<code>NavigationStack</code> 和 <code>NavigationSplitView</code> 的用法和特点，并提供示例代码。</p>
+<h2 id="NavigationLink"><a href="#NavigationLink" class="headerlink" title="NavigationLink"></a>NavigationLink</h2><p><code>NavigationLink</code> 是最常用的导航方式，适用于简单直接的导航场景，如列表中导航到详情页面。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">NavigationView</span> &#123;</span><br><span class="line">            <span class="type">VStack</span> &#123;</span><br><span class="line">                <span class="type">Text</span>(<span class="string">&quot;Home View&quot;</span>)</span><br><span class="line">                <span class="type">NavigationLink</span>(destination: <span class="type">DetailView</span>()) &#123;</span><br><span class="line">                    <span class="type">Text</span>(<span class="string">&quot;Go to Detail View&quot;</span>)</span><br><span class="line">                        .padding()</span><br><span class="line">                        .background(<span class="type">Color</span>.blue)</span><br><span class="line">                        .foregroundColor(.white)</span><br><span class="line">                        .cornerRadius(<span class="number">8</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            .navigationTitle(<span class="string">&quot;Home&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">DetailView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">Text</span>(<span class="string">&quot;Detail View&quot;</span>)</span><br><span class="line">            .navigationTitle(<span class="string">&quot;Detail&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="navigationDestination"><a href="#navigationDestination" class="headerlink" title="navigationDestination"></a>navigationDestination</h2><p><code>navigationDestination</code> 是 iOS 16 引入的，用于处理更复杂的导航逻辑，允许基于数据或路径动态决定要显示的目标视图。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="meta">@State</span> <span class="keyword">private</span> <span class="keyword">var</span> selectedItem: <span class="type">String</span>?</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">NavigationStack</span> &#123;</span><br><span class="line">            <span class="type">VStack</span> &#123;</span><br><span class="line">                <span class="type">Text</span>(<span class="string">&quot;Home View&quot;</span>)</span><br><span class="line">                <span class="type">Button</span>(<span class="string">&quot;Go to Item 1&quot;</span>) &#123;</span><br><span class="line">                    selectedItem <span class="operator">=</span> <span class="string">&quot;Item 1&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="type">Button</span>(<span class="string">&quot;Go to Item 2&quot;</span>) &#123;</span><br><span class="line">                    selectedItem <span class="operator">=</span> <span class="string">&quot;Item 2&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            .navigationDestination(for: <span class="type">String</span>.<span class="keyword">self</span>) &#123; item <span class="keyword">in</span></span><br><span class="line">                <span class="type">DetailView</span>(itemName: item)</span><br><span class="line">            &#125;</span><br><span class="line">            .navigationTitle(<span class="string">&quot;Home&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">DetailView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> itemName: <span class="type">String</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">Text</span>(<span class="string">&quot;Detail View for <span class="subst">\(itemName)</span>&quot;</span>)</span><br><span class="line">            .navigationTitle(itemName)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="NavigationView-vs-NavigationStack"><a href="#NavigationView-vs-NavigationStack" class="headerlink" title="NavigationView vs NavigationStack"></a>NavigationView vs NavigationStack</h2><p><code>NavigationView</code> 是 SwiftUI 最早的导航容器，适用于简单的层级导航结构。而 <code>NavigationStack</code> 是 iOS 16 引入的，提供了更灵活的导航路径管理。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">NavigationStack</span> &#123;</span><br><span class="line">            <span class="type">VStack</span> &#123;</span><br><span class="line">                <span class="type">Text</span>(<span class="string">&quot;Home View&quot;</span>)</span><br><span class="line">                <span class="type">NavigationLink</span>(destination: <span class="type">DetailView</span>()) &#123;</span><br><span class="line">                    <span class="type">Text</span>(<span class="string">&quot;Go to Detail View&quot;</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            .navigationTitle(<span class="string">&quot;Home&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="NavigationSplitView"><a href="#NavigationSplitView" class="headerlink" title="NavigationSplitView"></a>NavigationSplitView</h2><p><code>NavigationSplitView</code> 是 iOS 16 和 macOS 上引入的，用于支持复杂的分栏式布局，类似于 <code>UISplitViewController</code>。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">NavigationSplitView</span> &#123;</span><br><span class="line">            <span class="type">SidebarView</span>()</span><br><span class="line">        &#125; detail: &#123;</span><br><span class="line">            <span class="type">DetailView</span>()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">SidebarView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">List</span> &#123;</span><br><span class="line">            <span class="type">NavigationLink</span>(<span class="string">&quot;Item 1&quot;</span>, destination: <span class="type">DetailView</span>(item: <span class="string">&quot;Item 1&quot;</span>))</span><br><span class="line">            <span class="type">NavigationLink</span>(<span class="string">&quot;Item 2&quot;</span>, destination: <span class="type">DetailView</span>(item: <span class="string">&quot;Item 2&quot;</span>))</span><br><span class="line">        &#125;</span><br><span class="line">        .navigationTitle(<span class="string">&quot;Sidebar&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">DetailView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> item: <span class="type">String</span>?</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> item <span class="operator">=</span> item &#123;</span><br><span class="line">            <span class="type">Text</span>(<span class="string">&quot;Detail for <span class="subst">\(item)</span>&quot;</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">Text</span>(<span class="string">&quot;No Item Selected&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>NavigationSplitView</code> 可以自动适配不同设备，如 macOS、iPad 和 iPhone，提供统一的导航体验。</p>
+]]></content>
+      <categories>
+        <category>SwiftUI</category>
+      </categories>
+      <tags>
+        <tag>navigation</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>XCode14.3打包错误</title>
+    <url>/2023/10/08/iOS/XCode14-3%E6%89%93%E5%8C%85%E9%94%99%E8%AF%AF/</url>
+    <content><![CDATA[<ul>
+<li>在有pods的项目中，xcode14.3之后打包出现如下错误</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">command phasescriptexecution failed with a nonzero exit code</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>原因及解决方法如下</li>
+</ul>
+<p>There is an issue with Cocoapods now, because Xcode 14.3 is now using a relative path in its symlink for frameworks.</p>
+<p>Either wait for release of Cocoapods version 1.12.1 or make this simple change in your <code>Pods-APPNAME-frameworks.sh</code> file:</p>
+<p>Replace:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if [ -L &quot;$&#123;source&#125;&quot; ]; then</span><br><span class="line">  echo &quot;Symlinked...&quot;</span><br><span class="line">  source=&quot;$(readlink &quot;$&#123;source&#125;&quot;)&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>with:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if [ -L &quot;$&#123;source&#125;&quot; ]; then</span><br><span class="line">  echo &quot;Symlinked...&quot;</span><br><span class="line">  source=&quot;$(readlink -f &quot;$&#123;source&#125;&quot;)&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>Note that <code>-f</code> was added.</p>
+<p>参考链接：</p>
+<p><a href="https://developer.apple.com/forums/thread/727525">https://developer.apple.com/forums/thread/727525</a></p>
+]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+      <tags>
+        <tag>Xcode</tag>
+        <tag>iOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>崩溃日志的捕获和保存</title>
+    <url>/2024/10/25/iOS/iOS%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E6%97%A5%E5%BF%97%E7%9A%84%E6%8D%95%E8%8E%B7%E5%92%8C%E4%BF%9D%E5%AD%98/</url>
+    <content><![CDATA[<p>在iOS应用程序开发中，处理崩溃是一个重要的话题。能够捕获、保存并上传崩溃日志不仅可以帮助开发者快速定位和修复问题，还能提高应用程序的整体质量和用户体验。本文将介绍如何在iOS应用中实现崩溃日志的捕获、保存和上传功能。</p>
+<h2 id="1-捕获崩溃信息"><a href="#1-捕获崩溃信息" class="headerlink" title="1. 捕获崩溃信息"></a>1. 捕获崩溃信息</h2><p>首先，我们需要设置一个未捕获异常处理程序来捕获崩溃信息。这可以通过使用NSSetUncaughtExceptionHandler()函数来实现。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">void uncaughtExceptionHandler(NSException *exception) &#123;</span><br><span class="line">    NSArray *callStack = [exception callStackSymbols];</span><br><span class="line">    NSString *reason = [exception reason];</span><br><span class="line">    NSString *name = [exception name];</span><br><span class="line">    </span><br><span class="line">    NSMutableDictionary *crashInfo = [NSMutableDictionary dictionary];</span><br><span class="line">    [crashInfo setObject:callStack forKey:@&quot;callStack&quot;];</span><br><span class="line">    [crashInfo setObject:reason forKey:@&quot;reason&quot;];</span><br><span class="line">    [crashInfo setObject:name forKey:@&quot;name&quot;];</span><br><span class="line">    </span><br><span class="line">    // 保存崩溃信息到本地</span><br><span class="line">    [crashInfo writeToFile:getCrashLogPath() atomically:YES];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</span><br><span class="line">    NSSetUncaughtExceptionHandler(&amp;uncaughtExceptionHandler);</span><br><span class="line">    // ...</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-保存崩溃信息"><a href="#2-保存崩溃信息" class="headerlink" title="2. 保存崩溃信息"></a>2. 保存崩溃信息</h2><p>为了保存崩溃信息，我们需要一个函数来获取崩溃日志的保存路径。通常，我们会将崩溃日志保存在应用程序的Documents目录下。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NSString* getCrashLogPath() &#123;</span><br><span class="line">    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);</span><br><span class="line">    NSString *documentsDirectory = [paths objectAtIndex:0];</span><br><span class="line">    NSString *crashLogPath = [documentsDirectory stringByAppendingPathComponent:@&quot;crashLog.plist&quot;];</span><br><span class="line">    return crashLogPath;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-在下次启动时检查并上传崩溃日志"><a href="#3-在下次启动时检查并上传崩溃日志" class="headerlink" title="3. 在下次启动时检查并上传崩溃日志"></a>3. 在下次启动时检查并上传崩溃日志</h2><p>在应用程序启动时，我们需要检查是否存在保存的崩溃信息。如果存在，则将其上传到服务器。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</span><br><span class="line">    // ...</span><br><span class="line">    [self checkAndUploadCrashLog];</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)checkAndUploadCrashLog &#123;</span><br><span class="line">    NSString *crashLogPath = getCrashLogPath();</span><br><span class="line">    if ([[NSFileManager defaultManager] fileExistsAtPath:crashLogPath]) &#123;</span><br><span class="line">        NSDictionary *crashInfo = [NSDictionary dictionaryWithContentsOfFile:crashLogPath];</span><br><span class="line">        [self uploadCrashLog:crashInfo];</span><br><span class="line">        [[NSFileManager defaultManager] removeItemAtPath:crashLogPath error:nil];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)uploadCrashLog:(NSDictionary *)crashInfo &#123;</span><br><span class="line">    // 实现上传逻辑，例如使用 NSURLSession 发送 POST 请求</span><br><span class="line">    NSURL *url = [NSURL URLWithString:@&quot;https://your-server.com/crash-report&quot;];</span><br><span class="line">    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];</span><br><span class="line">    [request setHTTPMethod:@&quot;POST&quot;];</span><br><span class="line">    </span><br><span class="line">    NSError *error;</span><br><span class="line">    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:crashInfo options:0 error:&amp;error];</span><br><span class="line">    </span><br><span class="line">    if (!error) &#123;</span><br><span class="line">        [request setHTTPBody:jsonData];</span><br><span class="line">        [request setValue:@&quot;application/json&quot; forHTTPHeaderField:@&quot;Content-Type&quot;];</span><br><span class="line">        </span><br><span class="line">        NSURLSession *session = [NSURLSession sharedSession];</span><br><span class="line">        NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) &#123;</span><br><span class="line">            if (error) &#123;</span><br><span class="line">                NSLog(@&quot;Error uploading crash log: %@&quot;, error);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                NSLog(@&quot;Crash log uploaded successfully&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;];</span><br><span class="line">        </span><br><span class="line">        [task resume];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        NSLog(@&quot;Error creating JSON data: %@&quot;, error);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="使用第三方库"><a href="#使用第三方库" class="headerlink" title="使用第三方库"></a>使用第三方库</h2><p>虽然上述方法可以捕获基本的崩溃信息，但对于更复杂的场景，你可能需要考虑使用成熟的第三方库，如：</p>
+<p><code>PLCrashReporter</code></p>
+<p><code>KSCrash</code></p>
+<p><code>Crashlytics</code> (现在是<code>Firebase Crashlytics</code>的一部分)</p>
+<p>这些库提供了更多功能，如捕获低级别崩溃、符号化堆栈跟踪等。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>通过实施崩溃日志捕获、保存和上传系统，你可以更好地了解应用程序在实际使用中的表现，快速识别和修复问题，从而提高应用程序的稳定性和用户体验。记住，崩溃报告只是提高应用质量的第一步，及时分析这些报告并采取相应的修复措施同样重要。</p>
+]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+      <tags>
+        <tag>iOS</tag>
       </tags>
   </entry>
 </search>
