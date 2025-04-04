@@ -1,37 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>XCode14.3打包错误</title>
-    <url>/2023/10/08/XCode14-3%E6%89%93%E5%8C%85%E9%94%99%E8%AF%AF/</url>
-    <content><![CDATA[<ul>
-<li>在有pods的项目中，xcode14.3之后打包出现如下错误</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">command phasescriptexecution failed with a nonzero exit code</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>原因及解决方法如下</li>
-</ul>
-<p>There is an issue with Cocoapods now, because Xcode 14.3 is now using a relative path in its symlink for frameworks.</p>
-<p>Either wait for release of Cocoapods version 1.12.1 or make this simple change in your <code>Pods-APPNAME-frameworks.sh</code> file:</p>
-<p>Replace:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if [ -L &quot;$&#123;source&#125;&quot; ]; then</span><br><span class="line">  echo &quot;Symlinked...&quot;</span><br><span class="line">  source=&quot;$(readlink &quot;$&#123;source&#125;&quot;)&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>with:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if [ -L &quot;$&#123;source&#125;&quot; ]; then</span><br><span class="line">  echo &quot;Symlinked...&quot;</span><br><span class="line">  source=&quot;$(readlink -f &quot;$&#123;source&#125;&quot;)&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>Note that <code>-f</code> was added.</p>
-<p>参考链接：</p>
-<p><a href="https://developer.apple.com/forums/thread/727525">https://developer.apple.com/forums/thread/727525</a></p>
-]]></content>
-      <categories>
-        <category>iOS</category>
-      </categories>
-      <tags>
-        <tag>Xcode</tag>
-        <tag>iOS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>It is my first blog</title>
     <url>/2020/08/16/first%20blog/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -48,58 +17,6 @@
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>grep用法</title>
-    <url>/2023/08/16/grep%E7%94%A8%E6%B3%95/</url>
-    <content><![CDATA[<h3 id="grep用法"><a href="#grep用法" class="headerlink" title="grep用法"></a>grep用法</h3><h4 id="1-参数解析"><a href="#1-参数解析" class="headerlink" title="1.参数解析"></a>1.参数解析</h4><ol>
-<li><p>-E 使用正则表达式选项<br><code>grep -E &quot;[1-9]&quot;</code>  匹配数字1-9中的任意一个</p>
-</li>
-<li><p>-n 显示匹配行及行号（number）</p>
-</li>
-<li><p>-c 只输出匹配行的计数（count）  </p>
-</li>
-<li><p>-r 递归搜索，会搜索子目录</p>
-<span id="more"></span>
-</li>
-<li><p>-d skip 忽略子目录   </p>
-</li>
-<li><p>-i 忽略大小写（ignore）   </p>
-</li>
-<li><p>-v 显示不包含匹配文本的行（取反）</p>
-</li>
-<li><p>-l 只列出匹配的文件名</p>
-</li>
-<li><p>-L 列出不匹配的文件名</p>
-</li>
-<li><p>grep -w pattern files 只匹配整个单词，而不是字符串的一部分(如匹配’magic’，而不是’magical’)</p>
-</li>
-<li><p>&lt; 和 &gt; 分别标注单词的开始与结尾。grep ‘&lt;man&gt;’ 只匹配’man’，而不是’Batman’或’manic’等其他的字符串。</p>
-</li>
-<li><p>-o 只显示匹配行中匹配正则表达式的那部分</p>
-</li>
-</ol>
-<blockquote>
-<p>只显示匹配行中匹配正则表达式的那部分</p>
-</blockquote>
-<h4 id="2-正则表达式"><a href="#2-正则表达式" class="headerlink" title="2.正则表达式"></a>2.正则表达式</h4><h5 id="1-主要参数"><a href="#1-主要参数" class="headerlink" title="1.主要参数"></a>1.主要参数</h5><ol>
-<li>\ 正则中的转义符号</li>
-<li>. 表示单个字符  * 0个或者多个  + 1个或者多个</li>
-<li>.* 表示0个或者多个字符（可以没有字符，也s可以多个字符）</li>
-<li>.+ 表示1个或者多个字符（至少一个字符）</li>
-<li>^ 匹配正则表达式的开始</li>
-<li>&amp; 匹配正则表达式的结束</li>
-<li>[] 单个字符 如：[A-Z]表示A-Z的任意一个字母，[0-9a-zA-Z]</li>
-<li>（）括号里面表示一个整体 ^(abc) 表示以abc开始的</li>
-</ol>
-<p><img src="/../images/grep%E7%94%A8%E6%B3%95/image-20240908003240021-5726764.png" alt="image-20240908003240021"></p>
-]]></content>
-      <categories>
-        <category>shell</category>
-      </categories>
-      <tags>
-        <tag>grep</tag>
-      </tags>
   </entry>
   <entry>
     <title>combine学习</title>
@@ -1389,7 +1306,7 @@ numbers
 <p>作者：戴铭<br>链接：<a href="https://juejin.cn/post/7369534106604765221">https://juejin.cn/post/7369534106604765221</a><br>来源：稀土掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
 ]]></content>
       <categories>
-        <category>swift</category>
+        <category>SwiftUI</category>
       </categories>
       <tags>
         <tag>SwiftData</tag>
@@ -1419,6 +1336,276 @@ numbers
       </categories>
       <tags>
         <tag>Swift</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>grep用法</title>
+    <url>/2023/08/16/Shell/grep%E7%94%A8%E6%B3%95/</url>
+    <content><![CDATA[<h3 id="grep用法"><a href="#grep用法" class="headerlink" title="grep用法"></a>grep用法</h3><h4 id="1-参数解析"><a href="#1-参数解析" class="headerlink" title="1.参数解析"></a>1.参数解析</h4><ol>
+<li><p>-E 使用正则表达式选项<br><code>grep -E &quot;[1-9]&quot;</code>  匹配数字1-9中的任意一个</p>
+</li>
+<li><p>-n 显示匹配行及行号（number）</p>
+</li>
+<li><p>-c 只输出匹配行的计数（count）  </p>
+</li>
+<li><p>-r 递归搜索，会搜索子目录</p>
+<span id="more"></span>
+</li>
+<li><p>-d skip 忽略子目录   </p>
+</li>
+<li><p>-i 忽略大小写（ignore）   </p>
+</li>
+<li><p>-v 显示不包含匹配文本的行（取反）</p>
+</li>
+<li><p>-l 只列出匹配的文件名</p>
+</li>
+<li><p>-L 列出不匹配的文件名</p>
+</li>
+<li><p>grep -w pattern files 只匹配整个单词，而不是字符串的一部分(如匹配’magic’，而不是’magical’)</p>
+</li>
+<li><p>&lt; 和 &gt; 分别标注单词的开始与结尾。grep ‘&lt;man&gt;’ 只匹配’man’，而不是’Batman’或’manic’等其他的字符串。</p>
+</li>
+<li><p>-o 只显示匹配行中匹配正则表达式的那部分</p>
+</li>
+</ol>
+<blockquote>
+<p>只显示匹配行中匹配正则表达式的那部分</p>
+</blockquote>
+<h4 id="2-正则表达式"><a href="#2-正则表达式" class="headerlink" title="2.正则表达式"></a>2.正则表达式</h4><h5 id="1-主要参数"><a href="#1-主要参数" class="headerlink" title="1.主要参数"></a>1.主要参数</h5><ol>
+<li>\ 正则中的转义符号</li>
+<li>. 表示单个字符  * 0个或者多个  + 1个或者多个</li>
+<li>.* 表示0个或者多个字符（可以没有字符，也s可以多个字符）</li>
+<li>.+ 表示1个或者多个字符（至少一个字符）</li>
+<li>^ 匹配正则表达式的开始</li>
+<li>&amp; 匹配正则表达式的结束</li>
+<li>[] 单个字符 如：[A-Z]表示A-Z的任意一个字母，[0-9a-zA-Z]</li>
+<li>（）括号里面表示一个整体 ^(abc) 表示以abc开始的</li>
+</ol>
+<p><img src="/../images/grep%E7%94%A8%E6%B3%95/image-20240908003240021-5726764.png" alt="image-20240908003240021"></p>
+]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>grep</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ImageMagick 简介</title>
+    <url>/2024/12/09/Shell/ImageMagick%20%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<h3 id="ImageMagick-简介"><a href="#ImageMagick-简介" class="headerlink" title="ImageMagick 简介"></a><strong>ImageMagick 简介</strong></h3><p>ImageMagick 是一个强大的开源工具，可以用于创建、编辑、合成和转换图像。它支持多种图像格式（如 PNG、JPEG、GIF、TIFF 等），并提供丰富的命令行工具和编程接口。</p>
+<h3 id="安装-ImageMagick"><a href="#安装-ImageMagick" class="headerlink" title="安装 ImageMagick"></a><strong>安装 ImageMagick</strong></h3><h4 id="在-macOS-上安装"><a href="#在-macOS-上安装" class="headerlink" title="在 macOS 上安装"></a><strong>在 macOS 上安装</strong></h4><ol>
+<li><p>使用 <a href="https://brew.sh/">Homebrew</a>（推荐）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install imagemagick</span><br></pre></td></tr></table></figure>
+
+<p>如果需要使用 HDRI 或其他功能，可以添加选项：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install imagemagick --with-hdri</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">magick -version</span><br></pre></td></tr></table></figure>
+
+<p>输出版本信息即表示安装成功。</p>
+</li>
+</ol>
+<h3 id="ImageMagick-的主要用法"><a href="#ImageMagick-的主要用法" class="headerlink" title="ImageMagick 的主要用法"></a><strong>ImageMagick 的主要用法</strong></h3><h4 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a><strong>基本命令</strong></h4><ol>
+<li><p><strong>查看图像信息</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">magick identify image.png</span><br></pre></td></tr></table></figure>
+
+<p>显示图像的详细信息（格式、大小、颜色模式等）。</p>
+</li>
+<li><p><strong>格式转换</strong> 将 PNG 转换为 JPEG：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">magick input.png output.jpg</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>调整图像大小</strong> 按指定尺寸调整大小：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">magick input.png -resize 200x200 output.png</span><br></pre></td></tr></table></figure>
+
+<p>按比例调整（例如 50% 大小）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">magick input.png -resize 50% output.png</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>裁剪图像</strong> 从左上角裁剪 100x100 的区域：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">magick input.png -crop 100x100+0+0 output.png</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>添加水印</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">magick input.png watermark.png -gravity southeast -geometry +10+10 -composite output.png</span><br></pre></td></tr></table></figure>
+
+<p>在右下角添加水印。</p>
+</li>
+<li><p><strong>优化图像</strong> 压缩 PNG 文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">magick input.png -strip -quality 85 output.png</span><br></pre></td></tr></table></figure>
+
+<p>这会去掉元数据并调整压缩质量。</p>
+</li>
+<li><p><strong>旋转图像</strong> 逆时针旋转 90 度：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">magick input.png -rotate 90 output.png</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>将多张图像合成为动画 GIF</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">magick frame1.png frame2.png frame3.png output.gif</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a><strong>高级用法</strong></h4><ol>
+<li><p><strong>批量处理</strong> 使用 <code>find</code> 或 <code>xargs</code> 将命令应用于多个文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find ./images -name <span class="string">&quot;*.png&quot;</span> -<span class="built_in">exec</span> magick &#123;&#125; -resize 800x800 resized_&#123;&#125; \;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>添加文本到图像</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">magick input.png -gravity center -pointsize 30 -fill white -annotate +0+0 <span class="string">&quot;Hello, World&quot;</span> output.png</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>创建缩略图</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">magick input.png -thumbnail 100x100 thumb.png</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>图像模糊</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">magick input.png -blur 0x8 output.png</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>合并多张图像</strong> 横向合并：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">magick +append image1.png image2.png output.png</span><br></pre></td></tr></table></figure>
+
+<p>纵向合并：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">magick -append image1.png image2.png output.png</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h3 id="ImageMagick-的核心工具"><a href="#ImageMagick-的核心工具" class="headerlink" title="ImageMagick 的核心工具"></a><strong>ImageMagick 的核心工具</strong></h3><ol>
+<li><strong><code>magick</code></strong><br>主工具，用于大多数图像处理任务。</li>
+<li><strong><code>convert</code></strong><br>旧版本的主要工具，用于图像转换。已被 <code>magick</code> 替代，但仍然可用。</li>
+<li><strong><code>identify</code></strong><br>查看图像信息。</li>
+<li><strong><code>mogrify</code></strong><br>用于批量修改图像，会覆盖原文件。需谨慎使用。</li>
+<li><strong><code>composite</code></strong><br>合成工具，用于叠加图像。</li>
+</ol>
+<h3 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a><strong>参考资源</strong></h3><ul>
+<li>官方文档: <a href="https://imagemagick.org/script/index.php">https://imagemagick.org/script/index.php</a></li>
+<li>高级用法示例: ImageMagick Examples</li>
+</ul>
+]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Swift 中常用高阶函数介绍</title>
+    <url>/2025/05/11/Swift/Swift%20%E4%B8%AD%E5%B8%B8%E7%94%A8%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/</url>
+    <content><![CDATA[<h1 id="Swift-中常用高阶函数介绍"><a href="#Swift-中常用高阶函数介绍" class="headerlink" title="Swift 中常用高阶函数介绍"></a>Swift 中常用高阶函数介绍</h1><p>在 Swift 编程语言里，有一系列非常实用的高阶函数，它们能够帮助开发者更高效、简洁地处理集合数据。除了 <code>reduce</code> 方法，<code>map</code>、<code>filter</code>、<code>compactMap</code> 和 <code>flatMap</code> 等方法在集合处理中也扮演着重要角色。下面将详细介绍这些方法的特点和使用示例。</p>
+<h2 id="1-map-方法"><a href="#1-map-方法" class="headerlink" title="1. map 方法"></a>1. <code>map</code> 方法</h2><p><code>map</code> 方法用于对集合中的每个元素应用给定的转换闭包，然后返回一个包含转换结果的新集合。</p>
+<p>示例代码：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> numbers <span class="operator">=</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="keyword">let</span> squaredNumbers <span class="operator">=</span> numbers.map &#123; <span class="variable">$0</span> <span class="operator">*</span> <span class="variable">$0</span> &#125;</span><br><span class="line"><span class="built_in">print</span>(squaredNumbers) <span class="comment">// 输出: [1, 4, 9, 16, 25]</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>map</code> 方法对 <code>numbers</code> 数组里的每个元素进行平方操作，然后返回一个包含平方结果的新数组。</p>
+<h2 id="2-filter-方法"><a href="#2-filter-方法" class="headerlink" title="2. filter 方法"></a>2. <code>filter</code> 方法</h2><p><code>filter</code> 方法用于筛选出集合中满足指定条件的元素，然后返回一个包含这些元素的新集合。</p>
+<p>示例代码：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> numbers <span class="operator">=</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="keyword">let</span> evenNumbers <span class="operator">=</span> numbers.filter &#123; <span class="variable">$0</span> <span class="operator">%</span> <span class="number">2</span> <span class="operator">==</span> <span class="number">0</span> &#125;</span><br><span class="line"><span class="built_in">print</span>(evenNumbers) <span class="comment">// 输出: [2, 4]</span></span><br></pre></td></tr></table></figure>
+
+<p>这里，<code>filter</code> 方法筛选出 <code>numbers</code> 数组中所有的偶数，然后返回一个只包含偶数的新数组。</p>
+<h2 id="3-compactMap-方法"><a href="#3-compactMap-方法" class="headerlink" title="3. compactMap 方法"></a>3. <code>compactMap</code> 方法</h2><p><code>compactMap</code> 方法用于对集合中的每个元素应用给定的转换闭包，并且会过滤掉结果为 <code>nil</code> 的元素，最后返回一个不包含 <code>nil</code> 值的新集合。</p>
+<p>示例代码：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> strings <span class="operator">=</span> [<span class="string">&quot;1&quot;</span>, <span class="string">&quot;two&quot;</span>, <span class="string">&quot;3&quot;</span>, <span class="string">&quot;four&quot;</span>]</span><br><span class="line"><span class="keyword">let</span> numbers <span class="operator">=</span> strings.compactMap &#123; <span class="type">Int</span>(<span class="variable">$0</span>) &#125;</span><br><span class="line"><span class="built_in">print</span>(numbers) <span class="comment">// 输出: [1, 3]</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>compactMap</code> 方法尝试把 <code>strings</code> 数组中的每个字符串转换为整数，会过滤掉无法转换的字符串，最终返回一个只包含有效整数的新数组。</p>
+<h2 id="4-flatMap-方法"><a href="#4-flatMap-方法" class="headerlink" title="4. flatMap 方法"></a>4. <code>flatMap</code> 方法</h2><p><code>flatMap</code> 方法可以将嵌套的集合展开成一个一维集合。在 Swift 中，<code>flatMap</code> 有不同的使用场景。</p>
+<p>示例代码：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> nestedArray <span class="operator">=</span> [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]</span><br><span class="line"><span class="keyword">let</span> flattenedArray <span class="operator">=</span> nestedArray.flatMap &#123; <span class="variable">$0</span> &#125;</span><br><span class="line"><span class="built_in">print</span>(flattenedArray) <span class="comment">// 输出: [1, 2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+
+<p>这里，<code>flatMap</code> 方法把嵌套数组 <code>nestedArray</code> 展开成了一个一维数组。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><code>map</code>：对集合元素进行转换操作。</li>
+<li><code>filter</code>：筛选出满足条件的元素。</li>
+<li><code>compactMap</code>：进行转换并过滤掉 <code>nil</code> 值。</li>
+<li><code>flatMap</code>：展开嵌套集合。</li>
+</ul>
+<p>这些高阶函数都是处理集合时的实用工具，熟练掌握它们可以让代码更加简洁、易读和高效，提升开发效率和代码质量。</p>
+]]></content>
+      <categories>
+        <category>swift</category>
+      </categories>
+      <tags>
+        <tag>swift</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>swiftUI 中的导航比较</title>
+    <url>/2024/12/25/Swift/swiftUI%20%E4%B8%AD%E7%9A%84%E5%AF%BC%E8%88%AA%E6%AF%94%E8%BE%83/</url>
+    <content><![CDATA[<h1 id="SwiftUI-中的导航视图：NavigationLink、navigationDestination、NavigationView、NavigationStack-和-NavigationSplitView-比较与示例"><a href="#SwiftUI-中的导航视图：NavigationLink、navigationDestination、NavigationView、NavigationStack-和-NavigationSplitView-比较与示例" class="headerlink" title="SwiftUI 中的导航视图：NavigationLink、navigationDestination、NavigationView、NavigationStack 和 NavigationSplitView 比较与示例"></a>SwiftUI 中的导航视图：NavigationLink、navigationDestination、NavigationView、NavigationStack 和 NavigationSplitView 比较与示例</h1><p>在 SwiftUI 中，有多种方式可以实现视图之间的导航。本文将比较 <code>NavigationLink</code>、<code>navigationDestination</code>、<code>NavigationView</code>、<code>NavigationStack</code> 和 <code>NavigationSplitView</code> 的用法和特点，并提供示例代码。</p>
+<h2 id="NavigationLink"><a href="#NavigationLink" class="headerlink" title="NavigationLink"></a>NavigationLink</h2><p><code>NavigationLink</code> 是最常用的导航方式，适用于简单直接的导航场景，如列表中导航到详情页面。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">NavigationView</span> &#123;</span><br><span class="line">            <span class="type">VStack</span> &#123;</span><br><span class="line">                <span class="type">Text</span>(<span class="string">&quot;Home View&quot;</span>)</span><br><span class="line">                <span class="type">NavigationLink</span>(destination: <span class="type">DetailView</span>()) &#123;</span><br><span class="line">                    <span class="type">Text</span>(<span class="string">&quot;Go to Detail View&quot;</span>)</span><br><span class="line">                        .padding()</span><br><span class="line">                        .background(<span class="type">Color</span>.blue)</span><br><span class="line">                        .foregroundColor(.white)</span><br><span class="line">                        .cornerRadius(<span class="number">8</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            .navigationTitle(<span class="string">&quot;Home&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">DetailView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">Text</span>(<span class="string">&quot;Detail View&quot;</span>)</span><br><span class="line">            .navigationTitle(<span class="string">&quot;Detail&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="navigationDestination"><a href="#navigationDestination" class="headerlink" title="navigationDestination"></a>navigationDestination</h2><p><code>navigationDestination</code> 是 iOS 16 引入的，用于处理更复杂的导航逻辑，允许基于数据或路径动态决定要显示的目标视图。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="meta">@State</span> <span class="keyword">private</span> <span class="keyword">var</span> selectedItem: <span class="type">String</span>?</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">NavigationStack</span> &#123;</span><br><span class="line">            <span class="type">VStack</span> &#123;</span><br><span class="line">                <span class="type">Text</span>(<span class="string">&quot;Home View&quot;</span>)</span><br><span class="line">                <span class="type">Button</span>(<span class="string">&quot;Go to Item 1&quot;</span>) &#123;</span><br><span class="line">                    selectedItem <span class="operator">=</span> <span class="string">&quot;Item 1&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="type">Button</span>(<span class="string">&quot;Go to Item 2&quot;</span>) &#123;</span><br><span class="line">                    selectedItem <span class="operator">=</span> <span class="string">&quot;Item 2&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            .navigationDestination(for: <span class="type">String</span>.<span class="keyword">self</span>) &#123; item <span class="keyword">in</span></span><br><span class="line">                <span class="type">DetailView</span>(itemName: item)</span><br><span class="line">            &#125;</span><br><span class="line">            .navigationTitle(<span class="string">&quot;Home&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">DetailView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> itemName: <span class="type">String</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">Text</span>(<span class="string">&quot;Detail View for <span class="subst">\(itemName)</span>&quot;</span>)</span><br><span class="line">            .navigationTitle(itemName)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="NavigationView-vs-NavigationStack"><a href="#NavigationView-vs-NavigationStack" class="headerlink" title="NavigationView vs NavigationStack"></a>NavigationView vs NavigationStack</h2><p><code>NavigationView</code> 是 SwiftUI 最早的导航容器，适用于简单的层级导航结构。而 <code>NavigationStack</code> 是 iOS 16 引入的，提供了更灵活的导航路径管理。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">NavigationStack</span> &#123;</span><br><span class="line">            <span class="type">VStack</span> &#123;</span><br><span class="line">                <span class="type">Text</span>(<span class="string">&quot;Home View&quot;</span>)</span><br><span class="line">                <span class="type">NavigationLink</span>(destination: <span class="type">DetailView</span>()) &#123;</span><br><span class="line">                    <span class="type">Text</span>(<span class="string">&quot;Go to Detail View&quot;</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            .navigationTitle(<span class="string">&quot;Home&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="NavigationSplitView"><a href="#NavigationSplitView" class="headerlink" title="NavigationSplitView"></a>NavigationSplitView</h2><p><code>NavigationSplitView</code> 是 iOS 16 和 macOS 上引入的，用于支持复杂的分栏式布局，类似于 <code>UISplitViewController</code>。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">NavigationSplitView</span> &#123;</span><br><span class="line">            <span class="type">SidebarView</span>()</span><br><span class="line">        &#125; detail: &#123;</span><br><span class="line">            <span class="type">DetailView</span>()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">SidebarView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">List</span> &#123;</span><br><span class="line">            <span class="type">NavigationLink</span>(<span class="string">&quot;Item 1&quot;</span>, destination: <span class="type">DetailView</span>(item: <span class="string">&quot;Item 1&quot;</span>))</span><br><span class="line">            <span class="type">NavigationLink</span>(<span class="string">&quot;Item 2&quot;</span>, destination: <span class="type">DetailView</span>(item: <span class="string">&quot;Item 2&quot;</span>))</span><br><span class="line">        &#125;</span><br><span class="line">        .navigationTitle(<span class="string">&quot;Sidebar&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">DetailView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> item: <span class="type">String</span>?</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> item <span class="operator">=</span> item &#123;</span><br><span class="line">            <span class="type">Text</span>(<span class="string">&quot;Detail for <span class="subst">\(item)</span>&quot;</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">Text</span>(<span class="string">&quot;No Item Selected&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>NavigationSplitView</code> 可以自动适配不同设备，如 macOS、iPad 和 iPhone，提供统一的导航体验。</p>
+]]></content>
+      <categories>
+        <category>SwiftUI</category>
+      </categories>
+      <tags>
+        <tag>navigation</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>XCode14.3打包错误</title>
+    <url>/2023/10/08/iOS/XCode14-3%E6%89%93%E5%8C%85%E9%94%99%E8%AF%AF/</url>
+    <content><![CDATA[<ul>
+<li>在有pods的项目中，xcode14.3之后打包出现如下错误</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">command phasescriptexecution failed with a nonzero exit code</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>原因及解决方法如下</li>
+</ul>
+<p>There is an issue with Cocoapods now, because Xcode 14.3 is now using a relative path in its symlink for frameworks.</p>
+<p>Either wait for release of Cocoapods version 1.12.1 or make this simple change in your <code>Pods-APPNAME-frameworks.sh</code> file:</p>
+<p>Replace:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if [ -L &quot;$&#123;source&#125;&quot; ]; then</span><br><span class="line">  echo &quot;Symlinked...&quot;</span><br><span class="line">  source=&quot;$(readlink &quot;$&#123;source&#125;&quot;)&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>with:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if [ -L &quot;$&#123;source&#125;&quot; ]; then</span><br><span class="line">  echo &quot;Symlinked...&quot;</span><br><span class="line">  source=&quot;$(readlink -f &quot;$&#123;source&#125;&quot;)&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>Note that <code>-f</code> was added.</p>
+<p>参考链接：</p>
+<p><a href="https://developer.apple.com/forums/thread/727525">https://developer.apple.com/forums/thread/727525</a></p>
+]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+      <tags>
+        <tag>Xcode</tag>
+        <tag>iOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>崩溃日志的捕获和保存</title>
+    <url>/2024/10/25/iOS/iOS%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E6%97%A5%E5%BF%97%E7%9A%84%E6%8D%95%E8%8E%B7%E5%92%8C%E4%BF%9D%E5%AD%98/</url>
+    <content><![CDATA[<p>在iOS应用程序开发中，处理崩溃是一个重要的话题。能够捕获、保存并上传崩溃日志不仅可以帮助开发者快速定位和修复问题，还能提高应用程序的整体质量和用户体验。本文将介绍如何在iOS应用中实现崩溃日志的捕获、保存和上传功能。</p>
+<h2 id="1-捕获崩溃信息"><a href="#1-捕获崩溃信息" class="headerlink" title="1. 捕获崩溃信息"></a>1. 捕获崩溃信息</h2><p>首先，我们需要设置一个未捕获异常处理程序来捕获崩溃信息。这可以通过使用NSSetUncaughtExceptionHandler()函数来实现。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">void uncaughtExceptionHandler(NSException *exception) &#123;</span><br><span class="line">    NSArray *callStack = [exception callStackSymbols];</span><br><span class="line">    NSString *reason = [exception reason];</span><br><span class="line">    NSString *name = [exception name];</span><br><span class="line">    </span><br><span class="line">    NSMutableDictionary *crashInfo = [NSMutableDictionary dictionary];</span><br><span class="line">    [crashInfo setObject:callStack forKey:@&quot;callStack&quot;];</span><br><span class="line">    [crashInfo setObject:reason forKey:@&quot;reason&quot;];</span><br><span class="line">    [crashInfo setObject:name forKey:@&quot;name&quot;];</span><br><span class="line">    </span><br><span class="line">    // 保存崩溃信息到本地</span><br><span class="line">    [crashInfo writeToFile:getCrashLogPath() atomically:YES];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</span><br><span class="line">    NSSetUncaughtExceptionHandler(&amp;uncaughtExceptionHandler);</span><br><span class="line">    // ...</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-保存崩溃信息"><a href="#2-保存崩溃信息" class="headerlink" title="2. 保存崩溃信息"></a>2. 保存崩溃信息</h2><p>为了保存崩溃信息，我们需要一个函数来获取崩溃日志的保存路径。通常，我们会将崩溃日志保存在应用程序的Documents目录下。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NSString* getCrashLogPath() &#123;</span><br><span class="line">    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);</span><br><span class="line">    NSString *documentsDirectory = [paths objectAtIndex:0];</span><br><span class="line">    NSString *crashLogPath = [documentsDirectory stringByAppendingPathComponent:@&quot;crashLog.plist&quot;];</span><br><span class="line">    return crashLogPath;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-在下次启动时检查并上传崩溃日志"><a href="#3-在下次启动时检查并上传崩溃日志" class="headerlink" title="3. 在下次启动时检查并上传崩溃日志"></a>3. 在下次启动时检查并上传崩溃日志</h2><p>在应用程序启动时，我们需要检查是否存在保存的崩溃信息。如果存在，则将其上传到服务器。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</span><br><span class="line">    // ...</span><br><span class="line">    [self checkAndUploadCrashLog];</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)checkAndUploadCrashLog &#123;</span><br><span class="line">    NSString *crashLogPath = getCrashLogPath();</span><br><span class="line">    if ([[NSFileManager defaultManager] fileExistsAtPath:crashLogPath]) &#123;</span><br><span class="line">        NSDictionary *crashInfo = [NSDictionary dictionaryWithContentsOfFile:crashLogPath];</span><br><span class="line">        [self uploadCrashLog:crashInfo];</span><br><span class="line">        [[NSFileManager defaultManager] removeItemAtPath:crashLogPath error:nil];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)uploadCrashLog:(NSDictionary *)crashInfo &#123;</span><br><span class="line">    // 实现上传逻辑，例如使用 NSURLSession 发送 POST 请求</span><br><span class="line">    NSURL *url = [NSURL URLWithString:@&quot;https://your-server.com/crash-report&quot;];</span><br><span class="line">    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];</span><br><span class="line">    [request setHTTPMethod:@&quot;POST&quot;];</span><br><span class="line">    </span><br><span class="line">    NSError *error;</span><br><span class="line">    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:crashInfo options:0 error:&amp;error];</span><br><span class="line">    </span><br><span class="line">    if (!error) &#123;</span><br><span class="line">        [request setHTTPBody:jsonData];</span><br><span class="line">        [request setValue:@&quot;application/json&quot; forHTTPHeaderField:@&quot;Content-Type&quot;];</span><br><span class="line">        </span><br><span class="line">        NSURLSession *session = [NSURLSession sharedSession];</span><br><span class="line">        NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) &#123;</span><br><span class="line">            if (error) &#123;</span><br><span class="line">                NSLog(@&quot;Error uploading crash log: %@&quot;, error);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                NSLog(@&quot;Crash log uploaded successfully&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;];</span><br><span class="line">        </span><br><span class="line">        [task resume];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        NSLog(@&quot;Error creating JSON data: %@&quot;, error);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="使用第三方库"><a href="#使用第三方库" class="headerlink" title="使用第三方库"></a>使用第三方库</h2><p>虽然上述方法可以捕获基本的崩溃信息，但对于更复杂的场景，你可能需要考虑使用成熟的第三方库，如：</p>
+<p><code>PLCrashReporter</code></p>
+<p><code>KSCrash</code></p>
+<p><code>Crashlytics</code> (现在是<code>Firebase Crashlytics</code>的一部分)</p>
+<p>这些库提供了更多功能，如捕获低级别崩溃、符号化堆栈跟踪等。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>通过实施崩溃日志捕获、保存和上传系统，你可以更好地了解应用程序在实际使用中的表现，快速识别和修复问题，从而提高应用程序的稳定性和用户体验。记住，崩溃报告只是提高应用质量的第一步，及时分析这些报告并采取相应的修复措施同样重要。</p>
+]]></content>
+      <categories>
+        <category>iOS</category>
+      </categories>
+      <tags>
+        <tag>iOS</tag>
       </tags>
   </entry>
 </search>
