@@ -1,0 +1,174 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>swift 反射 | shxlxa</title><meta name="author" content="shxlxa"><meta name="copyright" content="shxlxa"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1.使用Swift反射将同样类型的obj2中非空字符串属性复制到obj1 1234567891011121314151617181920212223242526272829303132class AegReflectUtils &amp;#123;        &#x2F;&#x2F;&#x2F; 使用Swift反射将obj2中非空字符串属性复制到obj1    &#x2F;&#x2F;&#x2F; 注意：要求对象继承自NSObject且属性标记为@objc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="swift 反射">
+<meta property="og:url" content="https://shxlxa.github.io/2025/05/08/Swift/swift%20%E5%8F%8D%E5%B0%84/index.html">
+<meta property="og:site_name" content="shxlxa">
+<meta property="og:description" content="1.使用Swift反射将同样类型的obj2中非空字符串属性复制到obj1 1234567891011121314151617181920212223242526272829303132class AegReflectUtils &amp;#123;        &#x2F;&#x2F;&#x2F; 使用Swift反射将obj2中非空字符串属性复制到obj1    &#x2F;&#x2F;&#x2F; 注意：要求对象继承自NSObject且属性标记为@objc">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2025-05-08T11:09:43.000Z">
+<meta property="article:modified_time" content="2025-06-15T09:33:20.112Z">
+<meta property="article:author" content="shxlxa">
+<meta property="article:tag" content="swift">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://shxlxa.github.io/2025/05/08/Swift/swift%20%E5%8F%8D%E5%B0%84/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'swift 反射',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2025-06-15 17:33:20'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="shxlxa"><span class="site-name">shxlxa</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">swift 反射</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-08T11:09:43.000Z" title="发表于 2025-05-08 19:09:43">2025-05-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-06-15T09:33:20.112Z" title="更新于 2025-06-15 17:33:20">2025-06-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/swift/">swift</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="swift 反射"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>1.使用Swift反射将同样类型的obj2中非空字符串属性复制到obj1</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AegReflectUtils</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 使用Swift反射将obj2中非空字符串属性复制到obj1</span></span><br><span class="line">    <span class="comment">/// 注意：要求对象继承自NSObject且属性标记为@objc</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">copyObj2ToObj1</span>(<span class="keyword">_</span> <span class="params">obj1</span>: <span class="type">NSObject</span>, <span class="keyword">_</span> <span class="params">obj2</span>: <span class="type">NSObject</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> mirror <span class="operator">=</span> <span class="type">Mirror</span>(reflecting: obj2)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> child <span class="keyword">in</span> mirror.children &#123;</span><br><span class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> propertyName <span class="operator">=</span> child.label <span class="keyword">else</span> &#123; <span class="keyword">continue</span> &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 过滤不需要处理的属性</span></span><br><span class="line">            <span class="keyword">if</span> shouldSkip(property: propertyName) &#123;</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 验证属性类型为String且非空</span></span><br><span class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> stringValue <span class="operator">=</span> child.value <span class="keyword">as?</span> <span class="type">String</span>, <span class="operator">!</span>stringValue.isEmpty <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 使用KVC设置属性值，添加异常处理</span></span><br><span class="line">            obj1.setValue(stringValue, forKey: propertyName)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">shouldSkip</span>(<span class="params">property</span>: <span class="type">String</span>) -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">        <span class="comment">// 过滤黑名单属性</span></span><br><span class="line">        <span class="keyword">let</span> blacklist <span class="operator">=</span> [<span class="string">&quot;Companion&quot;</span>, <span class="string">&quot;serialVersionUID&quot;</span>]</span><br><span class="line">        <span class="keyword">return</span> blacklist.contains(property)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.对象代码</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@objc</span> <span class="keyword">class</span> <span class="title class_">AegDevice</span>: <span class="title class_">NSObject</span> &#123;</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> name: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> room: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> model: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> mac: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> ip: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> version: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> type: <span class="type">String</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> status: <span class="type">String</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> desc: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;name: <span class="subst">\(name <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>, room: <span class="subst">\(room <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>, model: <span class="subst">\(model <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>, mac: <span class="subst">\(mac <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>, ip: <span class="subst">\(ip <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>, version: <span class="subst">\(version <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>, type: <span class="subst">\(type <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>, status: <span class="subst">\(status <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试代码</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">func</span> <span class="title function_">test</span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> obj2 <span class="operator">=</span> <span class="type">AegDevice</span>()</span><br><span class="line">  obj2.name <span class="operator">=</span> <span class="string">&quot;test&quot;</span></span><br><span class="line">  obj2.room <span class="operator">=</span> <span class="string">&quot;room&quot;</span></span><br><span class="line">  obj2.model <span class="operator">=</span> <span class="string">&quot;model&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> obj1 <span class="operator">=</span> <span class="type">AegDevice</span>()</span><br><span class="line">  obj1.mac <span class="operator">=</span> <span class="string">&quot;mac&quot;</span></span><br><span class="line">  obj1.ip <span class="operator">=</span> <span class="string">&quot;ip&quot;</span></span><br><span class="line">  obj1.version <span class="operator">=</span> <span class="string">&quot;version&quot;</span></span><br><span class="line">  obj1.type <span class="operator">=</span> <span class="string">&quot;type&quot;</span></span><br><span class="line">  obj1.status <span class="operator">=</span> <span class="string">&quot;status&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="type">AegReflectUtils</span>.copyObj2ToObj1(obj1, obj2)</span><br><span class="line">  <span class="type">ASLog</span>(obj1.desc)</span><br><span class="line">  <span class="type">ASLog</span>(obj2.desc)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://shxlxa.github.io">shxlxa</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://shxlxa.github.io/2025/05/08/Swift/swift%20%E5%8F%8D%E5%B0%84/">https://shxlxa.github.io/2025/05/08/Swift/swift%20%E5%8F%8D%E5%B0%84/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://shxlxa.github.io" target="_blank">shxlxa</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/swift/">swift</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/05/11/Swift/Swift%20%E4%B8%AD%E5%B8%B8%E7%94%A8%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/" title="Swift 中常用高阶函数介绍"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Swift 中常用高阶函数介绍</div></div></a></div><div class="next-post pull-right"><a href="/2025/04/06/Swift/%E6%B5%8B%E8%AF%95%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B9%B6%E5%8F%91%E8%AF%B7%E6%B1%82/" title="测试多线程并发请求"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">测试多线程并发请求</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2025/05/11/Swift/Swift%20%E4%B8%AD%E5%B8%B8%E7%94%A8%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/" title="Swift 中常用高阶函数介绍"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-11</div><div class="title">Swift 中常用高阶函数介绍</div></div></a></div><div><a href="/2025/04/06/Swift/%E6%B5%8B%E8%AF%95%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B9%B6%E5%8F%91%E8%AF%B7%E6%B1%82/" title="测试多线程并发请求"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-06</div><div class="title">测试多线程并发请求</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">shxlxa</div><div class="author-info__description">This is my blog</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/shxlxa"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/15/flutter/flutter_command_cheatsheet/" title="Flutter 命令行速查表">Flutter 命令行速查表</a><time datetime="2025-06-15T10:09:33.000Z" title="发表于 2025-06-15 18:09:33">2025-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/11/Swift/Swift%20%E4%B8%AD%E5%B8%B8%E7%94%A8%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/" title="Swift 中常用高阶函数介绍">Swift 中常用高阶函数介绍</a><time datetime="2025-05-11T09:40:43.000Z" title="发表于 2025-05-11 17:40:43">2025-05-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/08/Swift/swift%20%E5%8F%8D%E5%B0%84/" title="swift 反射">swift 反射</a><time datetime="2025-05-08T11:09:43.000Z" title="发表于 2025-05-08 19:09:43">2025-05-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/06/Swift/%E6%B5%8B%E8%AF%95%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B9%B6%E5%8F%91%E8%AF%B7%E6%B1%82/" title="测试多线程并发请求">测试多线程并发请求</a><time datetime="2025-04-06T03:09:43.000Z" title="发表于 2025-04-06 11:09:43">2025-04-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/14/Swift/Swift%E5%B7%A5%E7%A8%8B%E6%9E%84%E5%BB%BATest%E5%92%8Crelease%E7%8E%AF%E5%A2%83/" title="Swift工程构建Test和release环境">Swift工程构建Test和release环境</a><time datetime="2025-03-14T14:53:43.000Z" title="发表于 2025-03-14 22:53:43">2025-03-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By shxlxa</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

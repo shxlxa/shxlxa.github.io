@@ -1624,4 +1624,224 @@ numbers
         <tag>swift</tag>
       </tags>
   </entry>
+  <entry>
+    <title>swift 反射</title>
+    <url>/2025/05/08/Swift/swift%20%E5%8F%8D%E5%B0%84/</url>
+    <content><![CDATA[<p>1.使用Swift反射将同样类型的obj2中非空字符串属性复制到obj1</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AegReflectUtils</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 使用Swift反射将obj2中非空字符串属性复制到obj1</span></span><br><span class="line">    <span class="comment">/// 注意：要求对象继承自NSObject且属性标记为@objc</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">copyObj2ToObj1</span>(<span class="keyword">_</span> <span class="params">obj1</span>: <span class="type">NSObject</span>, <span class="keyword">_</span> <span class="params">obj2</span>: <span class="type">NSObject</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> mirror <span class="operator">=</span> <span class="type">Mirror</span>(reflecting: obj2)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> child <span class="keyword">in</span> mirror.children &#123;</span><br><span class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> propertyName <span class="operator">=</span> child.label <span class="keyword">else</span> &#123; <span class="keyword">continue</span> &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 过滤不需要处理的属性</span></span><br><span class="line">            <span class="keyword">if</span> shouldSkip(property: propertyName) &#123;</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 验证属性类型为String且非空</span></span><br><span class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> stringValue <span class="operator">=</span> child.value <span class="keyword">as?</span> <span class="type">String</span>, <span class="operator">!</span>stringValue.isEmpty <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 使用KVC设置属性值，添加异常处理</span></span><br><span class="line">            obj1.setValue(stringValue, forKey: propertyName)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">shouldSkip</span>(<span class="params">property</span>: <span class="type">String</span>) -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">        <span class="comment">// 过滤黑名单属性</span></span><br><span class="line">        <span class="keyword">let</span> blacklist <span class="operator">=</span> [<span class="string">&quot;Companion&quot;</span>, <span class="string">&quot;serialVersionUID&quot;</span>]</span><br><span class="line">        <span class="keyword">return</span> blacklist.contains(property)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.对象代码</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@objc</span> <span class="keyword">class</span> <span class="title class_">AegDevice</span>: <span class="title class_">NSObject</span> &#123;</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> name: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> room: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> model: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> mac: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> ip: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> version: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> type: <span class="type">String</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">@objc</span> <span class="keyword">var</span> status: <span class="type">String</span>? <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> desc: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;name: <span class="subst">\(name <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>, room: <span class="subst">\(room <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>, model: <span class="subst">\(model <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>, mac: <span class="subst">\(mac <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>, ip: <span class="subst">\(ip <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>, version: <span class="subst">\(version <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>, type: <span class="subst">\(type <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>, status: <span class="subst">\(status <span class="operator">??</span> <span class="string">&quot;&quot;</span>)</span>&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试代码</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">func</span> <span class="title function_">test</span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> obj2 <span class="operator">=</span> <span class="type">AegDevice</span>()</span><br><span class="line">  obj2.name <span class="operator">=</span> <span class="string">&quot;test&quot;</span></span><br><span class="line">  obj2.room <span class="operator">=</span> <span class="string">&quot;room&quot;</span></span><br><span class="line">  obj2.model <span class="operator">=</span> <span class="string">&quot;model&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> obj1 <span class="operator">=</span> <span class="type">AegDevice</span>()</span><br><span class="line">  obj1.mac <span class="operator">=</span> <span class="string">&quot;mac&quot;</span></span><br><span class="line">  obj1.ip <span class="operator">=</span> <span class="string">&quot;ip&quot;</span></span><br><span class="line">  obj1.version <span class="operator">=</span> <span class="string">&quot;version&quot;</span></span><br><span class="line">  obj1.type <span class="operator">=</span> <span class="string">&quot;type&quot;</span></span><br><span class="line">  obj1.status <span class="operator">=</span> <span class="string">&quot;status&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="type">AegReflectUtils</span>.copyObj2ToObj1(obj1, obj2)</span><br><span class="line">  <span class="type">ASLog</span>(obj1.desc)</span><br><span class="line">  <span class="type">ASLog</span>(obj2.desc)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>swift</category>
+      </categories>
+      <tags>
+        <tag>swift</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Flutter 命令行速查表</title>
+    <url>/2025/06/15/flutter/flutter_command_cheatsheet/</url>
+    <content><![CDATA[<h1 id="📘-Flutter-命令行速查表（Cheat-Sheet）"><a href="#📘-Flutter-命令行速查表（Cheat-Sheet）" class="headerlink" title="📘 Flutter 命令行速查表（Cheat Sheet）"></a>📘 Flutter 命令行速查表（Cheat Sheet）</h1><hr>
+<h2 id="🚀-基础命令"><a href="#🚀-基础命令" class="headerlink" title="🚀 基础命令"></a>🚀 基础命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>flutter --version</code></td>
+<td>查看当前 Flutter 版本</td>
+</tr>
+<tr>
+<td><code>flutter doctor</code></td>
+<td>检查环境配置和依赖状态</td>
+</tr>
+<tr>
+<td><code>flutter upgrade</code></td>
+<td>升级 Flutter SDK 到最新版本</td>
+</tr>
+<tr>
+<td><code>flutter help</code></td>
+<td>查看所有可用命令的帮助信息</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="📦-项目创建与管理"><a href="#📦-项目创建与管理" class="headerlink" title="📦 项目创建与管理"></a>📦 项目创建与管理</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>flutter create my_app</code></td>
+<td>创建一个新的 Flutter 项目</td>
+</tr>
+<tr>
+<td><code>flutter create .</code></td>
+<td>在当前目录初始化项目（适用于空目录）</td>
+</tr>
+<tr>
+<td><code>flutter pub get</code></td>
+<td>获取依赖包</td>
+</tr>
+<tr>
+<td><code>flutter pub upgrade</code></td>
+<td>升级依赖包到最新版本</td>
+</tr>
+<tr>
+<td><code>flutter pub outdated</code></td>
+<td>查看依赖包是否存在新版本</td>
+</tr>
+<tr>
+<td><code>flutter clean</code></td>
+<td>清除构建缓存，常用于解决编译异常</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🧪-运行与调试"><a href="#🧪-运行与调试" class="headerlink" title="🧪 运行与调试"></a>🧪 运行与调试</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>flutter run</code></td>
+<td>运行项目到默认设备</td>
+</tr>
+<tr>
+<td><code>flutter run -d chrome</code></td>
+<td>运行到 Web 浏览器（如 Chrome）</td>
+</tr>
+<tr>
+<td><code>flutter run -d emulator-5554</code></td>
+<td>运行到指定设备（通过设备 ID）</td>
+</tr>
+<tr>
+<td><code>flutter emulators</code></td>
+<td>查看本地可用模拟器</td>
+</tr>
+<tr>
+<td><code>flutter devices</code></td>
+<td>列出所有连接的设备</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🛠️-构建与打包"><a href="#🛠️-构建与打包" class="headerlink" title="🛠️ 构建与打包"></a>🛠️ 构建与打包</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>flutter build apk</code></td>
+<td>构建 Android APK 包</td>
+</tr>
+<tr>
+<td><code>flutter build apk --release</code></td>
+<td>构建 Release 模式 APK</td>
+</tr>
+<tr>
+<td><code>flutter build appbundle</code></td>
+<td>构建 Android AAB 包（用于 Play 商店）</td>
+</tr>
+<tr>
+<td><code>flutter build ios</code></td>
+<td>构建 iOS 应用（需 macOS + Xcode）</td>
+</tr>
+<tr>
+<td><code>flutter build web</code></td>
+<td>构建 Web 应用版本</td>
+</tr>
+<tr>
+<td><code>flutter build macos</code> &#x2F; <code>windows</code> &#x2F; <code>linux</code></td>
+<td>构建桌面平台应用</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🧪-测试与分析"><a href="#🧪-测试与分析" class="headerlink" title="🧪 测试与分析"></a>🧪 测试与分析</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>flutter test</code></td>
+<td>执行项目中的所有测试用例</td>
+</tr>
+<tr>
+<td><code>flutter test test/my_test.dart</code></td>
+<td>运行特定测试文件</td>
+</tr>
+<tr>
+<td><code>flutter analyze</code></td>
+<td>分析项目中的潜在问题和错误</td>
+</tr>
+<tr>
+<td><code>dart format .</code></td>
+<td>格式化整个项目中的 Dart 文件</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="📦-Dart-依赖管理"><a href="#📦-Dart-依赖管理" class="headerlink" title="📦 Dart 依赖管理"></a>📦 Dart 依赖管理</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>dart pub add http</code></td>
+<td>添加 <code>http</code> 依赖包</td>
+</tr>
+<tr>
+<td><code>dart pub remove http</code></td>
+<td>移除 <code>http</code> 依赖包</td>
+</tr>
+<tr>
+<td><code>dart pub get</code></td>
+<td>获取依赖（等同于 <code>flutter pub get</code>）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🧰-工具命令（可选）"><a href="#🧰-工具命令（可选）" class="headerlink" title="🧰 工具命令（可选）"></a>🧰 工具命令（可选）</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>flutter gen-l10n</code></td>
+<td>生成本地化资源（用于 <code>intl</code> 包）</td>
+</tr>
+<tr>
+<td><code>flutter pub run build_runner build</code></td>
+<td>运行代码生成器（如 <code>json_serializable</code>, <code>freezed</code> 等）</td>
+</tr>
+</tbody></table>
+<hr>
+<blockquote>
+<p>📌 提示：大多数 Flutter 命令都支持 <code>--help</code> 查看详细参数说明，如：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flutter build apk --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>如需生成 PDF 或导出 Markdown，请告知平台需求。</p>
+]]></content>
+      <categories>
+        <category>flutter</category>
+      </categories>
+      <tags>
+        <tag>flutter</tag>
+      </tags>
+  </entry>
 </search>
